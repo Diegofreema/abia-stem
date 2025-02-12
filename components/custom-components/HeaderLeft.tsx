@@ -1,3 +1,4 @@
+'use client';
 import { colors } from '@/constants';
 import { Input } from '@chakra-ui/react';
 import { IconSearch, IconX } from '@tabler/icons-react';
