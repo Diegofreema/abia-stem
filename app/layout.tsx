@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import localFont from 'next/font/local';
 import './globals.css';
 import { Provider } from '@/components/ui/provider';
@@ -33,15 +34,17 @@ export default function RootLayout({
     <ViewTransitions>
       <html lang="en">
         <Provider>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
-          >
-            <Header />
-            <Box mx={'auto'} width={{ base: '90%', md: '80%', lg: '70%' }}>
-              <main className="min-h-screen">{children}</main>
-              <Footer />
-            </Box>
-          </body>
+          <NuqsAdapter>
+            <body
+              className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
+            >
+              <Header />
+              <Box mx={'auto'} width={{ base: '90%', md: '80%', lg: '70%' }}>
+                <main className="min-h-screen">{children}</main>
+                <Footer />
+              </Box>
+            </body>
+          </NuqsAdapter>
         </Provider>
       </html>
     </ViewTransitions>

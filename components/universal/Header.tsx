@@ -1,9 +1,7 @@
-'use client';
-import React from 'react';
-import { FlexWrapper } from '../custom-components/FlexWrapper';
-import Image from 'next/image';
 import { Link } from 'next-view-transitions';
+import Image from 'next/image';
 import { CategorySwitcher } from '../custom-components/CategorySwitcher';
+import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { HeaderLeft } from '../custom-components/HeaderLeft';
 
 export const Header = () => {
