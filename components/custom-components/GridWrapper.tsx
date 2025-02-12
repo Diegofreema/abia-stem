@@ -1,13 +1,24 @@
-import { SimpleGrid, SimpleGridProps } from '@chakra-ui/react';
+import {
+  ConditionalValue,
+  SimpleGrid,
+  SimpleGridProps,
+} from '@chakra-ui/react';
 
-type Props = SimpleGridProps & {};
+type Props = SimpleGridProps & {
+  md?: ConditionalValue<number>;
+  base?: ConditionalValue<number>;
+};
 
-export const GridWrapper = ({ ...props }: Props): JSX.Element => {
+export const GridWrapper = ({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  md = 2,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  base = 1,
+  ...props
+}: Props): JSX.Element => {
   return (
-    <SimpleGrid
-      {...props}
-      columns={{ base: 1, md: 2 }}
-      gap={{ base: 10, md: 15 }}
-    />
+    <SimpleGrid {...props} columns={{ base, md }} gap={{ base: 10, md: 15 }} />
   );
 };
