@@ -263,3 +263,22 @@ export const trendingCoursesArray = [
     authorImage: 'https://themes.stackbros.in/eduport_r/assets/10-BOjYzw86.jpg',
   },
 ];
+
+export const footerLinks = [
+  {
+    title: 'Company',
+    links: [
+      { name: 'About', url: '#' },
+      { name: 'Blog', url: '#' },
+      { name: 'Contact', url: '#' },
+    ],
+  },
+  {
+    title: 'Teaching',
+    links: [
+      { name: 'Become a Teacher', url: '#' },
+
+      { name: 'Terms & Conditions', url: '#' },
+    ],
+  },
+];

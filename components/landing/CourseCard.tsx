@@ -18,8 +18,14 @@ export const CourseCard = ({ course }: Props): JSX.Element => {
       maxW={'sm'}
       backgroundColor={'white'}
       boxShadow={'sm'}
+      className="group"
     >
-      <Image src={course.img} alt={course.title} />
+      <Image
+        src={course.img}
+        alt={course.title}
+        _groupHover={{ scale: 1.05 }}
+        className="duration-300 transition group-hover:scale-110"
+      />
       <Card.Body gap="2">
         <FlexWrapper justifyContent={'space-between'} alignItems={'center'}>
           <Box backgroundColor={'#EBF8F2'} p={1} borderRadius={5}>

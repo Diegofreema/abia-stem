@@ -22,8 +22,13 @@ export const TrendingCourseCard = ({ course }: Props): JSX.Element => {
       maxW={'sm'}
       backgroundColor={'white'}
       boxShadow={'sm'}
+      className="group"
     >
-      <Image src={course.img} alt={course.title} />
+      <Image
+        src={course.img}
+        alt={course.title}
+        // className="group-hover:scale-110 duration-300 transition-all"
+      />
       <Card.Body>
         <FlexWrapper
           width={'100%'}

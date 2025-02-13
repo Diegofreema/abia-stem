@@ -1,12 +1,13 @@
+'use client';
 import { For } from '@chakra-ui/react';
-import { FlexWrapper } from '../custom-components/FlexWrapper';
-import { DisplayCard } from './DisplayCard';
 import {
   IconDeviceDesktop,
   IconRosetteDiscountCheck,
   IconUser,
   IconUsers,
 } from '@tabler/icons-react';
+import { FlexWrapper } from '../custom-components/FlexWrapper';
+import { DisplayCard } from './DisplayCard';
 
 const details = [
   {

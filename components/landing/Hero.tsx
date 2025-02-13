@@ -9,6 +9,7 @@ import { NormalText, Title } from '../typography/Title';
 import { HeroActionBtns } from './HeroActionBtns';
 import { HoverAvatarCard } from './HoverAvatarCard';
 import { FloatingImages } from './FloatingImages';
+import Magnet from '../custom-components/Magnet';
 
 const text = ['Learn with experts', 'Get certificate', 'Get membership'];
 
@@ -69,13 +70,16 @@ const RightHero = () => {
       height={'100%'}
       position={'relative'}
     >
-      <Image
-        src={'/hero.png'}
-        width={500}
-        height={500}
-        alt="hero"
-        objectFit="cover"
-      />
+      <Magnet padding={10} disabled={false}>
+        <Image
+          src={'/hero.png'}
+          width={500}
+          height={500}
+          alt="hero"
+          objectFit="cover"
+        />
+      </Magnet>
+
       <FloatingImages src="./download.svg" top="50%" left={0} />
       <FloatingImages
         src="./figma.svg"

@@ -7,6 +7,7 @@ import { Header } from '@/components/universal/Header';
 import { Footer } from '@/components/universal/Footer';
 import { ViewTransitions } from 'next-view-transitions';
 import { Box } from '@chakra-ui/react';
+import { colors } from '@/constants';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -39,8 +40,18 @@ export default function RootLayout({
               className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
             >
               <Header />
-              <Box mx={'auto'} width={{ base: '90%', md: '80%', lg: '70%' }}>
+              <Box
+                mx={'auto'}
+                width={{ base: '90%', md: '80%', lg: '70%' }}
+                pb={50}
+              >
                 <main className="min-h-screen">{children}</main>
+              </Box>
+              <Box
+                borderWidth={1}
+                borderStyle={'solid'}
+                borderColor={colors.textGrey}
+              >
                 <Footer />
               </Box>
             </body>

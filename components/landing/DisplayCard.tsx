@@ -18,7 +18,11 @@ export const DisplayCard = ({
   color,
 }: Props): JSX.Element => {
   return (
-    <Card.Root backgroundColor={backgroundColor} flex={1}>
+    <Card.Root
+      backgroundColor={backgroundColor}
+      flex={1}
+      className="hover:-translate-y-4 duration-300 transition-all"
+    >
       <CardBody>
         <FlexWrapper gap={5} alignItems={'center'}>
           <Icon size={80} color={color} />
