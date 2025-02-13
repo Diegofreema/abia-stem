@@ -32,7 +32,7 @@ export const TrendingCoursesCards = (): JSX.Element => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="group-hover:-translate-x-10" />
+      <CarouselPrevious />
       <CarouselNext />
     </Carousel>
   );
