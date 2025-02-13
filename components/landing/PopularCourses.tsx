@@ -1,24 +1,17 @@
 'use client';
 
-import { colors } from '@/constants';
 import { Stack } from '@chakra-ui/react';
-import { NormalText, Title } from '../typography/Title';
-import { CoursesSwitcher } from './CoursesSwitcher';
+import { Heading } from '../custom-components/Heading';
 import { Courses } from './Courses';
+import { CoursesSwitcher } from './CoursesSwitcher';
 
 export const PopularCourses = (): JSX.Element => {
   return (
     <Stack textAlign={'center'} py={10} mt={20} gap={10}>
-      <Title
-        fontSize={{ base: '2xl', md: '5xl' }}
-        fontWeight={600}
-        color={colors.black}
-      >
-        Most Popular Courses
-      </Title>
-      <NormalText fontSize={{ base: 'md', md: 'lg' }}>
-        Choose from hundreds of courses from specialist organizations
-      </NormalText>
+      <Heading
+        title=" Most Popular Courses"
+        description="Choose from hundreds of courses from specialist organizations"
+      />
       <CoursesSwitcher />
       <Courses />
     </Stack>

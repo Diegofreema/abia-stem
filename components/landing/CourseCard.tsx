@@ -1,9 +1,9 @@
+import { colors } from '@/constants';
 import { coursesArray } from '@/dummy_data';
-import { Box, Card, CardRoot, IconButton, Image } from '@chakra-ui/react';
+import { Box, Card, IconButton, Image, Separator } from '@chakra-ui/react';
+import { IconCalendar, IconClock, IconHeart } from '@tabler/icons-react';
 import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { NormalText } from '../typography/Title';
-import { IconHeart, IconStar } from '@tabler/icons-react';
-import { colors } from '@/constants';
 import { Rating } from '../ui/rating';
 
 type Props = {
@@ -53,7 +53,23 @@ export const CourseCard = ({ course }: Props): JSX.Element => {
           <NormalText color={colors.black}>{course.rating}/5</NormalText>
         </FlexWrapper>
       </Card.Body>
-      <Card.Footer gap="2"></Card.Footer>
+      <Separator />
+      <Card.Footer gap="2" width={'100%'}>
+        <FlexWrapper
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          width={'100%'}
+        >
+          <FlexWrapper alignItems={'center'} gap={1}>
+            <IconClock color={colors.red} />
+            <NormalText>{course.duration}</NormalText>
+          </FlexWrapper>
+          <FlexWrapper alignItems={'center'} gap={1}>
+            <IconCalendar color={colors.orange} />
+            <NormalText>{course.numberOfLectures} lectures</NormalText>
+          </FlexWrapper>
+        </FlexWrapper>
+      </Card.Footer>
     </Card.Root>
   );
 };
