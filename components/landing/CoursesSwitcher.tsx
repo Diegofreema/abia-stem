@@ -3,14 +3,8 @@ import { useSelectCourses } from '@/hooks/useSelectCourses';
 import { Box, For } from '@chakra-ui/react';
 import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { NormalText } from '../typography/Title';
+import { courses } from '@/dummy_data';
 
-const courses = [
-  'Web Design',
-  'Development',
-  'Graphic Design',
-  'Marketing',
-  'Finance',
-];
 export const CoursesSwitcher = (): JSX.Element => {
   const [selectedCourse, setSelectedCourse] = useSelectCourses();
 

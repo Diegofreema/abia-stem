@@ -1,13 +1,9 @@
-import type { Metadata } from 'next';
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import localFont from 'next/font/local';
-import './globals.css';
 import { Provider } from '@/components/ui/provider';
-import { Header } from '@/components/universal/Header';
-import { Footer } from '@/components/universal/Footer';
+import type { Metadata } from 'next';
 import { ViewTransitions } from 'next-view-transitions';
-import { Box } from '@chakra-ui/react';
-import { colors } from '@/constants';
+import localFont from 'next/font/local';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import './globals.css';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -39,21 +35,7 @@ export default function RootLayout({
             <body
               className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
             >
-              <Header />
-              <Box
-                mx={'auto'}
-                width={{ base: '90%', md: '80%', lg: '70%' }}
-                pb={50}
-              >
-                <main className="min-h-screen">{children}</main>
-              </Box>
-              <Box
-                borderWidth={1}
-                borderStyle={'solid'}
-                borderColor={colors.textGrey}
-              >
-                <Footer />
-              </Box>
+              <main className="min-h-screen">{children}</main>
             </body>
           </NuqsAdapter>
         </Provider>

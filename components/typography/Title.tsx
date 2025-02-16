@@ -7,8 +7,18 @@ type Props = TextProps & {
   color?: string;
 };
 
-export const Title = ({ ...props }: TitleProps): JSX.Element => {
-  return <Heading {...props} fontFamily={'heading'} />;
+export const Title = ({
+  fontSize = { base: '3xl', md: '5xl' },
+  ...props
+}: TitleProps): JSX.Element => {
+  return (
+    <Heading
+      {...props}
+      fontFamily={'heading'}
+      fontSize={fontSize}
+      fontWeight={600}
+    />
+  );
 };
 
 export const NormalText = ({

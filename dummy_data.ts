@@ -1,3 +1,13 @@
+import {
+  IconBook2,
+  IconDashboard,
+  IconHeart,
+  IconMoneybag,
+  IconUser,
+  IconUserCircle,
+  IconUsersGroup,
+} from '@tabler/icons-react';
+
 export const coursesArray = [
   {
     id: 1,
@@ -279,6 +289,74 @@ export const footerLinks = [
       { name: 'Become a Teacher', url: '#' },
 
       { name: 'Terms & Conditions', url: '#' },
+    ],
+  },
+];
+
+export const courses = [
+  'Web Design',
+  'Development',
+  'Graphic Design',
+  'Marketing',
+  'Finance',
+];
+
+export const accountLinks = [
+  {
+    account: 'Instructor',
+    icon: IconUser,
+    links: [
+      {
+        label: 'Dashboard',
+        link: '/instructor/dashboard',
+        icon: IconDashboard,
+      },
+      {
+        label: 'Courses',
+        link: '/instructor/courses',
+        icon: IconBook2,
+      },
+      {
+        label: 'Profile',
+        link: '/instructor/profile',
+        icon: IconUser,
+      },
+      {
+        label: 'Earnings',
+        link: '/instructor/earnings',
+        icon: IconMoneybag,
+      },
+      {
+        label: 'Students',
+        link: '/instructor/students',
+        icon: IconUsersGroup,
+      },
+    ],
+  },
+  {
+    account: 'Student',
+    icon: IconUserCircle,
+    links: [
+      {
+        label: 'Dashboard',
+        link: '/student/dashboard',
+        icon: IconDashboard,
+      },
+      {
+        label: 'Courses',
+        link: '/student/courses',
+        icon: IconBook2,
+      },
+      {
+        label: 'Wishlist',
+        link: '/student/wishlists',
+        icon: IconHeart,
+      },
+      {
+        label: 'Profile',
+        link: '/student/profile',
+        icon: IconUser,
+      },
     ],
   },
 ];

@@ -1,6 +1,7 @@
 import { Stack } from '@chakra-ui/react';
-import { NormalText, Title } from '../typography/Title';
-import { colors } from '@/constants';
+import { NormalText } from '../typography/Title';
+import BlurText from './BluredText';
+import { FlexWrapper } from './FlexWrapper';
 
 type Props = {
   title: string;
@@ -9,14 +10,16 @@ type Props = {
 
 export const Heading = ({ description, title }: Props): JSX.Element => {
   return (
-    <Stack gap={5}>
-      <Title
-        fontSize={{ base: '2xl', md: '5xl' }}
-        fontWeight={600}
-        color={colors.black}
-      >
-        {title}
-      </Title>
+    <Stack>
+      <FlexWrapper justifyContent={'center'}>
+        <BlurText
+          text={title}
+          delay={100}
+          animateBy="letters"
+          direction="top"
+          className="sm:text-2xl md:text-5xl mb-8 font-bold text-black text-center"
+        />
+      </FlexWrapper>
       <NormalText fontSize={{ base: 'md', md: 'lg' }}>{description}</NormalText>
     </Stack>
   );

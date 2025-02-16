@@ -2,12 +2,28 @@
 import { colors } from '@/constants';
 import { Input } from '@chakra-ui/react';
 import { IconSearch, IconX } from '@tabler/icons-react';
+import { Session, User } from 'better-auth';
+import { usePathname, useRouter } from 'next/navigation';
 import { useQueryState } from 'nuqs';
-import { Avatar } from '../ui/avatar';
+import { Button } from '../ui/button';
+import { AvatarMenu } from './AvatarMenu';
 import { FlexWrapper } from './FlexWrapper';
 
-export const HeaderLeft = () => {
+type Props = {
+  user: User | undefined;
+  session: Session | undefined;
+};
+export const HeaderLeft = ({ user, session }: Props) => {
   const [query, setQuery] = useQueryState('query', { defaultValue: '' });
+  console.log(user);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const onSignIn = () => {
+    localStorage.setItem('callbackUrl', pathname);
+    router.push('/auth/sign-in');
+  };
+
   return (
     <FlexWrapper gap={3} alignItems={'center'}>
       <FlexWrapper
@@ -38,7 +54,22 @@ export const HeaderLeft = () => {
         )}
         <IconSearch color="black" size={25} />
       </FlexWrapper>
-      <Avatar src="/avatar.jpg" />
+      {!session ? (
+        <Button
+          backgroundColor={colors.skyBlue}
+          px={4}
+          color={colors.blue}
+          onClick={onSignIn}
+        >
+          Login
+        </Button>
+      ) : (
+        <AvatarMenu
+          image={user?.image || '/boy.png'}
+          email={user?.email || ''}
+          name={user?.name || ''}
+        />
+      )}
     </FlexWrapper>
   );
 };

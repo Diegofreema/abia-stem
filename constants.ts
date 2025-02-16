@@ -10,4 +10,5 @@ export const colors = {
   orange: '#FD7E13',
   green: '#08BC87',
   pale: '#F6F7F9',
+  bgGrey: '#E7F0FA',
 };

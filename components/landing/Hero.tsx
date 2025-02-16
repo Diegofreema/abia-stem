@@ -70,7 +70,7 @@ const RightHero = () => {
       height={'100%'}
       position={'relative'}
     >
-      <Magnet padding={10} disabled={false}>
+      <Magnet padding={5} disabled={false}>
         <Image
           src={'/hero.png'}
           width={500}
