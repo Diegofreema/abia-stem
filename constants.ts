@@ -11,4 +11,5 @@ export const colors = {
   green: '#08BC87',
   pale: '#F6F7F9',
   bgGrey: '#E7F0FA',
+  banner: '#1D3B53',
 };

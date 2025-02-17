@@ -11,12 +11,18 @@ import { IconLayoutDashboard } from '@tabler/icons-react';
 import { Title } from '../typography/Title';
 import { FlexWrapper } from './FlexWrapper';
 import { useSelectCourses } from '@/hooks/useSelectCourses';
+import { usePathname } from 'next/navigation';
 
-export const CategorySwitcher = (): JSX.Element => {
+export const CategorySwitcher = (): JSX.Element | null => {
   const [, setSelectedCat] = useSelectCourses();
+  const pathname = usePathname();
   const onClick = (cat: string) => {
     setSelectedCat(cat);
   };
+
+  if (pathname !== '/') {
+    return null;
+  }
   return (
     <HoverCardRoot openDelay={500} closeDelay={100}>
       <HoverCardTrigger>

@@ -5,21 +5,18 @@ import { IconRosetteDiscountCheck } from '@tabler/icons-react';
 import Image from 'next/image';
 import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { GridWrapper } from '../custom-components/GridWrapper';
-import { NormalText, Title } from '../typography/Title';
+import Magnet from '../custom-components/Magnet';
+import RotatingText from '../custom-components/RotatingText';
+import { NormalText } from '../typography/Title';
+import { FloatingImages } from './FloatingImages';
 import { HeroActionBtns } from './HeroActionBtns';
 import { HoverAvatarCard } from './HoverAvatarCard';
-import { FloatingImages } from './FloatingImages';
-import Magnet from '../custom-components/Magnet';
 
 const text = ['Learn with experts', 'Get certificate', 'Get membership'];
 
 export const Hero = () => {
   return (
-    <GridWrapper
-      placeItems={'center'}
-      gap={{ base: 10, md: 15 }}
-      width={'100%'}
-    >
+    <GridWrapper placeItems={'center'} width={'100%'}>
       <LeftHero />
       <RightHero />
     </GridWrapper>
@@ -29,15 +26,28 @@ export const Hero = () => {
 const LeftHero = () => {
   return (
     <Stack gap={7}>
-      <Title
-        as="h2"
-        fontSize={{ base: '3xl', md: '6xl' }}
-        color={'black'}
-        fontWeight={700}
-        lineHeight={1.2}
-      >
-        Limitless learning at your fingertips
-      </Title>
+      <FlexWrapper gap={2} alignItems={'center'} className="text-2xl">
+        {/* <Title as="h2" color={'black'} fontWeight={700} lineHeight={1.2}>
+         
+        </Title> */}
+        <RotatingText
+          texts={[
+            'at your fingertips',
+            'from your comfort',
+            'that is self paced',
+          ]}
+          mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black text-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+          staggerFrom={'last'}
+          initial={{ y: '100%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '-120%' }}
+          staggerDuration={0.025}
+          splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+          transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+          rotationInterval={3000}
+        />
+      </FlexWrapper>
+
       <NormalText fontSize={{ base: 'md', md: 'xl' }} color={colors.textGrey}>
         Online learning and teaching marketplace with 5K+ courses & 10M
         students. Taught by experts to help you acquire new skills.

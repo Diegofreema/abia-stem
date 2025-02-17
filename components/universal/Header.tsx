@@ -8,7 +8,6 @@ import { session } from '@/server';
 
 export const Header = async () => {
   const user = session?.user;
-  console.log(user, session?.session);
 
   return (
     <FlexWrapper p={14} alignItems={'center'} justifyContent={'space-between'}>
