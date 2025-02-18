@@ -14,6 +14,9 @@ const User = defineTable({
   phone: v.optional(v.string()),
   phoneVerificationTime: v.optional(v.number()),
   isAnonymous: v.optional(v.boolean()),
+  numberOfCourses: v.number(),
+  numberOfStudents: v.number(),
+  rating: v.number(),
   //   roles: v.union(
   //     v.literal('student'),
   //     v.literal('instructor'),

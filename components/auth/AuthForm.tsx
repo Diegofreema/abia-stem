@@ -7,7 +7,7 @@ import { NormalText, Title } from '../typography/Title';
 import { Button } from '../ui/button';
 import { GoogleLogo } from '../ui/GoogleLogo';
 
-export const AuthForm = (): JSX.Element => {
+export const AuthForm = () => {
   return (
     <FlexWrapper className="bg-white w-full h-full justify-center items-center  flex-col">
       <FlexWrapper
