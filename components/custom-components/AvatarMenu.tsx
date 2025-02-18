@@ -1,22 +1,21 @@
 import {
   MenuContent,
   MenuItem,
+  MenuItemGroup,
   MenuRoot,
   MenuSeparator,
   MenuTrigger,
-  MenuItemGroup,
 } from '@/components/ui/menu';
-import { Box } from '@chakra-ui/react';
-import { IconPower, IconSettings, IconUser } from '@tabler/icons-react';
-import { Avatar } from '../ui/avatar';
 import { colors } from '@/constants';
-import { FlexWrapper } from './FlexWrapper';
+import { Box, Icon } from '@chakra-ui/react';
+import { useAuth } from '@clerk/clerk-react';
+import { IconPower, IconSettings, IconUser } from '@tabler/icons-react';
 import { NormalText } from '../typography/Title';
-type Props = {
-  image: string;
-  name: string;
-  email: string;
-};
+import { Avatar } from '../ui/avatar';
+import { FlexWrapper } from './FlexWrapper';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+
 const menuItems = [
   {
     value: 'edit',
@@ -34,35 +33,63 @@ const menuItems = [
     icon: IconPower,
   },
 ];
-export const AvatarMenu = ({ image, email, name }: Props): JSX.Element => {
+type Value = 'edit' | 'settings' | 'sign-out';
+export const AvatarMenu = (): JSX.Element | null => {
+  const { signOut, userId } = useAuth();
+  const user = useQuery(api.users.currentUser, { userId: userId! });
+  const onClick = (value: Value) => {
+    if (value === 'sign-out') {
+      signOut({ redirectUrl: '/' });
+    }
+  };
+  // const user = { image: '', email: '', name: '' };
+  if (!user) return null;
   return (
     <MenuRoot>
       <MenuTrigger>
-        <Avatar src={image || '/boy.png'} />
+        <Avatar src={user?.image || '/boy.png'} />
       </MenuTrigger>
       <MenuContent backgroundColor={colors.white}>
-        <MenuItem value="profile">
-          <Avatar src={image || '/boy.png'} />
+        <MenuItem value="profile" _hover={{ backgroundColor: 'transparent' }}>
+          <Avatar src={user?.image || '/boy.png'} />
           <FlexWrapper flex={1} flexDir={'column'}>
             <NormalText color={colors.black} fontSize={'md'} fontWeight={600}>
-              {name}
+              {user.name}
             </NormalText>
             <NormalText color={colors.black} fontSize={'md'} fontWeight={500}>
-              {email}
+              {user.email}
             </NormalText>
           </FlexWrapper>
         </MenuItem>
-        <MenuSeparator borderColor={colors.textGrey} />
+        <MenuSeparator borderColor={colors.textGrey} mb={3} />
         <MenuItemGroup>
-          {menuItems.map(({ icon: Icon, label, value }) => (
+          {menuItems.map(({ icon: UserIcon, label, value }) => (
             <MenuItem
               value={value}
               key={value}
+              role="group"
               className="group hover:bg-['#E7F0FA']"
+              _hover={{
+                backgroundColor:
+                  value === 'sign-out'
+                    ? 'rgba(225, 0,0 , 0.1)'
+                    : colors.skyBlue,
+              }}
+              onClick={() => onClick(value as Value)}
             >
-              <Icon className="text-[#747579] group-hover:text-['#0760c9']" />
+              <Icon
+                as={UserIcon}
+                boxSize={4}
+                _groupHover={{
+                  color: value === 'sign-out' ? 'red' : '#0760c9',
+                }}
+                color={colors.textGrey}
+              />
               <Box
                 flex={1}
+                _groupHover={{
+                  color: value === 'sign-out' ? 'red' : '#0760c9',
+                }}
                 className="group-hover:text-['#0760c9'] text-[#747579]"
               >
                 {label}

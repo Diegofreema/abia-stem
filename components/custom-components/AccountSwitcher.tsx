@@ -43,6 +43,7 @@ export const AccountSwitcher = (): JSX.Element => {
               positioning={{ placement: 'right-end' }}
               openDelay={100}
               closeDelay={100}
+              key={index}
             >
               <HoverCardTrigger>
                 <FlexWrapper

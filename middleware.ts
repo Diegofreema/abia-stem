@@ -1,16 +1,65 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { getSessionCookie } from 'better-auth';
+// import {
+//   convexAuthNextjsMiddleware,
+//   createRouteMatcher,
+//   nextjsMiddlewareRedirect,
+// } from '@convex-dev/auth/nextjs/server';
 
-export async function middleware(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request); // Optionally pass config as the second argument if cookie name or prefix is customized.
-  if (!sessionCookie) {
-    console.log(request.url);
+// const isSignInPage = createRouteMatcher(['/auth/sign-in']);
+// const isProtectedRoute = createRouteMatcher([
+//   '/instructor(.*)',
+//   '/student(.*)',
+// ]);
 
-    return NextResponse.redirect(new URL('/auth/sign-in', request.url));
+// export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
+//   const isAuthenticated = await convexAuth.isAuthenticated();
+//   if (isSignInPage(request) && isAuthenticated) {
+//     return nextjsMiddlewareRedirect(request, '/');
+//   }
+//   if (isProtectedRoute(request) && !isAuthenticated) {
+//     return nextjsMiddlewareRedirect(request, '/auth/sign-in');
+//   }
+// });
+
+// export const config = {
+//   // The following matcher runs middleware on all routes
+//   // except static assets.
+//   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+// };
+
+// import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+
+// const isPublicRoute = createRouteMatcher(['auth/sign-in']);
+
+// export default clerkMiddleware(async (auth, request) => {
+//   if (!isPublicRoute(request)) {
+//     await auth.protect();
+//   }
+// });
+
+// export const config = {
+//   matcher: [
+//     // Skip Next.js internals and all static files, unless found in search params
+//     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+//     // Always run for API routes
+//     '/(api|trpc)(.*)',
+//   ],
+// };
+
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+
+const isPublicRoute = createRouteMatcher(['/auth(.*)', '/']);
+
+export default clerkMiddleware(async (auth, request) => {
+  if (!isPublicRoute(request)) {
+    await auth.protect();
   }
-  return NextResponse.next();
-}
+});
 
 export const config = {
-  matcher: ['/instructor/dashboard', '/student/dashboard'], // Specify the routes the middleware applies to
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
 };

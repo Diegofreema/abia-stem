@@ -2,20 +2,16 @@
 import { colors } from '@/constants';
 import { Input } from '@chakra-ui/react';
 import { IconSearch, IconX } from '@tabler/icons-react';
-import { Session, User } from 'better-auth';
+import { Authenticated, Unauthenticated } from 'convex/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useQueryState } from 'nuqs';
 import { Button } from '../ui/button';
 import { AvatarMenu } from './AvatarMenu';
 import { FlexWrapper } from './FlexWrapper';
 
-type Props = {
-  user: User | undefined;
-  session: Session | undefined;
-};
-export const HeaderLeft = ({ user, session }: Props) => {
+export const HeaderLeft = () => {
   const [query, setQuery] = useQueryState('query', { defaultValue: '' });
-  console.log(user);
+  // console.log(user);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -54,7 +50,7 @@ export const HeaderLeft = ({ user, session }: Props) => {
         )}
         <IconSearch color="black" size={25} />
       </FlexWrapper>
-      {!session ? (
+      <Unauthenticated>
         <Button
           backgroundColor={colors.skyBlue}
           px={4}
@@ -63,13 +59,10 @@ export const HeaderLeft = ({ user, session }: Props) => {
         >
           Login
         </Button>
-      ) : (
-        <AvatarMenu
-          image={user?.image || '/boy.png'}
-          email={user?.email || ''}
-          name={user?.name || ''}
-        />
-      )}
+      </Unauthenticated>
+      <Authenticated>
+        <AvatarMenu />
+      </Authenticated>
     </FlexWrapper>
   );
 };

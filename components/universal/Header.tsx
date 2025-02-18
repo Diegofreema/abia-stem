@@ -4,10 +4,9 @@ import { CategorySwitcher } from '../custom-components/CategorySwitcher';
 import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { HeaderLeft } from '../custom-components/HeaderLeft';
 import { AccountSwitcher } from '../custom-components/AccountSwitcher';
-import { session } from '@/server';
 
 export const Header = async () => {
-  const user = session?.user;
+  // const user = session?.user;
 
   return (
     <FlexWrapper p={14} alignItems={'center'} justifyContent={'space-between'}>
@@ -19,7 +18,7 @@ export const Header = async () => {
         <AccountSwitcher />
       </FlexWrapper>
 
-      <HeaderLeft user={user} session={session?.session} />
+      <HeaderLeft />
     </FlexWrapper>
   );
 };

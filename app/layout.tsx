@@ -1,3 +1,4 @@
+import ConvexClientProvider from '@/components/ConvexProvider';
 import { Provider } from '@/components/ui/provider';
 import type { Metadata } from 'next';
 import { ViewTransitions } from 'next-view-transitions';
@@ -29,17 +30,21 @@ export default function RootLayout({
 }>) {
   return (
     <ViewTransitions>
-      <html lang="en">
-        <Provider>
-          <NuqsAdapter>
-            <body
-              className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
-            >
-              <main className="min-h-screen">{children}</main>
-            </body>
-          </NuqsAdapter>
-        </Provider>
-      </html>
+      {/* <ConvexAuthNextjsServerProvider> */}
+      <ConvexClientProvider>
+        <html lang="en">
+          <Provider>
+            <NuqsAdapter>
+              <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
+              >
+                <main className="min-h-screen">{children}</main>
+              </body>
+            </NuqsAdapter>
+          </Provider>
+        </html>
+      </ConvexClientProvider>
+      {/* </ConvexAuthNextjsServerProvider> */}
     </ViewTransitions>
   );
 }

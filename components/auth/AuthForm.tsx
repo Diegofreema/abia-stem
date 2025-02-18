@@ -1,20 +1,13 @@
 'use client';
-import { signIn } from '@/auth-client';
 import { colors } from '@/constants';
-import { IconBrandGoogle } from '@tabler/icons-react';
+
+import { SignInButton } from '@clerk/clerk-react';
 import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { NormalText, Title } from '../typography/Title';
 import { Button } from '../ui/button';
-import { useEffect, useRef } from 'react';
+import { GoogleLogo } from '../ui/GoogleLogo';
 
 export const AuthForm = (): JSX.Element => {
-  const callbackUrl = useRef<string | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      callbackUrl.current = localStorage.getItem('callbackUrl');
-    }
-  }, []);
   return (
     <FlexWrapper className="bg-white w-full h-full justify-center items-center  flex-col">
       <FlexWrapper
@@ -29,19 +22,27 @@ export const AuthForm = (): JSX.Element => {
         <NormalText fontSize={20}>
           Nice to see you! Please log in with your account.
         </NormalText>
-        <Button
-          color={colors.white}
-          background={colors.blue}
-          px={4}
-          onClick={() => signIn(callbackUrl.current || '/')}
-          _hover={{
-            backgroundColor: colors.skyBlue,
-            transition: 'all 0.3s linear',
-          }}
+        <SignInButton
+          mode="modal"
+          signUpFallbackRedirectUrl={'/'}
+          signUpForceRedirectUrl={'/'}
+          fallbackRedirectUrl={'/'}
+          forceRedirectUrl={'/'}
         >
-          <IconBrandGoogle />
-          Login with Google
-        </Button>
+          <Button
+            color={colors.white}
+            background={colors.blue}
+            px={4}
+            loadingText="Signing in..."
+            _hover={{
+              backgroundColor: colors.skyBlue,
+              transition: 'all 0.3s linear',
+            }}
+          >
+            <GoogleLogo />
+            Login with Google
+          </Button>
+        </SignInButton>
       </FlexWrapper>
     </FlexWrapper>
   );
