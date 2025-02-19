@@ -4,6 +4,7 @@ import { Stack } from '@chakra-ui/react';
 import { Heading } from '../custom-components/Heading';
 import { Courses } from './Courses';
 import { CoursesSwitcher } from './CoursesSwitcher';
+import { Suspense } from 'react';
 
 export const PopularCourses = (): JSX.Element => {
   return (
@@ -12,8 +13,12 @@ export const PopularCourses = (): JSX.Element => {
         title=" Most Popular Courses"
         description="Choose from hundreds of courses from specialist organizations"
       />
-      <CoursesSwitcher />
-      <Courses />
+      <Suspense>
+        <CoursesSwitcher />
+      </Suspense>
+      <Suspense>
+        <Courses />
+      </Suspense>
     </Stack>
   );
 };

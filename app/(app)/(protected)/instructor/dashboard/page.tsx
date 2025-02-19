@@ -1,11 +1,16 @@
 import { MostSellingCourseTable } from '@/components/tables/MostSellingCourseTable';
 import { DashboardCard } from './_component/DashboardCard';
+import { Suspense } from 'react';
 
 const dashboard = async () => {
   return (
     <div>
-      <DashboardCard />
-      <MostSellingCourseTable />
+      <Suspense>
+        <DashboardCard />
+      </Suspense>
+      <Suspense>
+        <MostSellingCourseTable />
+      </Suspense>
     </div>
   );
 };

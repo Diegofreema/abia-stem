@@ -4,6 +4,7 @@ import { CategorySwitcher } from '../custom-components/CategorySwitcher';
 import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { HeaderLeft } from '../custom-components/HeaderLeft';
 import { AccountSwitcher } from '../custom-components/AccountSwitcher';
+import { Suspense } from 'react';
 
 export const Header = async () => {
   // const user = session?.user;
@@ -14,8 +15,12 @@ export const Header = async () => {
         <Link href={'/'}>
           <Image src={'/logo.svg'} width={150} height={50} alt="logo" />
         </Link>
-        <CategorySwitcher />
-        <AccountSwitcher />
+        <Suspense>
+          <CategorySwitcher />
+        </Suspense>
+        <Suspense>
+          <AccountSwitcher />
+        </Suspense>
       </FlexWrapper>
 
       <HeaderLeft />

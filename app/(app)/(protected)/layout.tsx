@@ -5,17 +5,17 @@ import React, { Suspense } from 'react';
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Box width="100%" minHeight="100dvh">
-      <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Box width="100%" minHeight="100dvh">
         <Banner />
-      </Suspense>
-      <Box width={{ base: '90%', md: '75%', lg: '70%' }} mx="auto">
-        <Suspense>
+
+        <Box width={{ base: '90%', md: '75%', lg: '70%' }} mx="auto">
           <ProfilePreview />
-        </Suspense>
-        {children}
+
+          {children}
+        </Box>
       </Box>
-    </Box>
+    </Suspense>
   );
 };
 
