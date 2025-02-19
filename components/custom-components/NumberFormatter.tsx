@@ -6,6 +6,7 @@ import { colors } from '@/constants';
 interface NumberFormatterProps {
   number: number;
   text?: string;
+  big?: boolean;
 }
 const formatNumber = (num: number): string => {
   if (num >= 1000000) {
@@ -20,10 +21,20 @@ const formatNumber = (num: number): string => {
   }
 };
 
-const NumberFormatter: React.FC<NumberFormatterProps> = ({ number, text }) => {
+const NumberFormatter: React.FC<NumberFormatterProps> = ({
+  number,
+  text,
+  big,
+}) => {
+  const fontSize = big ? 30 : 18;
+  const fontWeight = big ? 'bold' : 'normal';
   return (
     <FlexWrapper alignItems={'center'} gap={1}>
-      <NormalText color={colors.black} fontSize={18}>
+      <NormalText
+        color={colors.black}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+      >
         {formatNumber(number)}
       </NormalText>
       {text && (

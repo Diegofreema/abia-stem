@@ -12,10 +12,9 @@ const InstructorLayout = ({ children }: Props) => {
   return (
     <Box minH={'100%'} width={'100%'} mt={10}>
       <FlexWrapper gap={10}>
-        <Box flexBasis={'30%'}>
-          <SideNav routes={instructorRoutes} />
-        </Box>
-        <Box width={'100%'} flexBasis={'70%'} backgroundColor={'green'}>
+        <SideNav routes={instructorRoutes} />
+
+        <Box width={'100%'} flexBasis={'70%'}>
           {children}
         </Box>
       </FlexWrapper>

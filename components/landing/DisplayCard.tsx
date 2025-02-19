@@ -1,10 +1,11 @@
 import { Card, CardBody, CardDescription, Stack } from '@chakra-ui/react';
 import { Icon } from '@tabler/icons-react';
 import { FlexWrapper } from '../custom-components/FlexWrapper';
+import NumberFormatter from '../custom-components/NumberFormatter';
 
 type Props = {
   icon: Icon;
-  title: string;
+  title: string | number;
   description: string;
   backgroundColor: string;
   color: string;
@@ -28,7 +29,11 @@ export const DisplayCard = ({
           <Icon size={80} color={color} />
           <Stack gap={2}>
             <Card.Title color={'black'} fontWeight={'bold'} fontSize={'2xl'}>
-              {title}
+              {typeof title === 'number' ? (
+                <NumberFormatter number={title} big />
+              ) : (
+                title
+              )}
             </Card.Title>
             <CardDescription color={'black'} fontSize={'md'} fontWeight={500}>
               {description}

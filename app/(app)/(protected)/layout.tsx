@@ -7,7 +7,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box width="100%" minHeight="100dvh">
       <Banner />
-      <Box width={{ base: '90%', md: '75%', lg: '65%' }} mx="auto">
+      <Box width={{ base: '90%', md: '75%', lg: '70%' }} mx="auto">
         <ProfilePreview />
         {children}
       </Box>

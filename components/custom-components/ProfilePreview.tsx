@@ -11,12 +11,17 @@ import { colors } from '@/constants';
 import { IconBook, IconStar, IconUser } from '@tabler/icons-react';
 import { Button } from '../ui/button';
 import NumberFormatter from './NumberFormatter';
+import { usePathname, useRouter } from 'next/navigation';
 
 export const ProfilePreview = () => {
   const { userId } = useAuth();
   const user = useQuery(api.users.currentUser, { userId: userId! });
-
-  if (!user) return null;
+  const router = useRouter();
+  const pathname = usePathname();
+  const onNavigate = () => {
+    router.push('/instructor/courses/create-course');
+  };
+  if (!user || pathname === '/instructor/courses/create-course') return null;
   const ratingText =
     user.rating === 0 ? 'No rating yet' : `${user.rating.toFixed(1)}/5`;
   return (
@@ -54,6 +59,7 @@ export const ProfilePreview = () => {
       </FlexWrapper>
       <Button
         color={colors.white}
+        onClick={onNavigate}
         bg={colors.green}
         px={5}
         _hover={{ opacity: 0.5 }}

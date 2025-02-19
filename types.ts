@@ -1,5 +1,3 @@
-import { Icon } from '@tabler/icons-react';
-
 export type User = {
   id: string;
   email: string;
@@ -13,5 +11,5 @@ export type User = {
 export type IRoutes = {
   path: string;
   label: string;
-  icon: Icon;
+  icon: string;
 };

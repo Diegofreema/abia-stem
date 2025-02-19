@@ -1,7 +1,7 @@
 'use client';
 import { colors } from '@/constants';
 import { accountLinks } from '@/dummy_data';
-import { For } from '@chakra-ui/react';
+import { For, Icon } from '@chakra-ui/react';
 import { IconChevronDown } from '@tabler/icons-react';
 import { Link } from 'next-view-transitions';
 import { usePathname } from 'next/navigation';
@@ -38,7 +38,7 @@ export const AccountSwitcher = (): JSX.Element => {
       <HoverCardContent maxWidth="240px" gap={3} backgroundColor={'white'}>
         <HoverCardArrow />
         <For each={accountLinks}>
-          {({ account, icon: Icon, links }, index) => (
+          {({ account, icon: BIcon, links }, index) => (
             <HoverCardRoot
               positioning={{ placement: 'right-end' }}
               openDelay={100}
@@ -60,7 +60,7 @@ export const AccountSwitcher = (): JSX.Element => {
                   px={3}
                   alignItems={'center'}
                 >
-                  <Icon color={colors.textGrey} size={20} />
+                  <Icon as={BIcon} color={colors.textGrey} boxSize={5} />
                   <NormalText
                     key={index}
                     cursor={'pointer'}
@@ -73,7 +73,7 @@ export const AccountSwitcher = (): JSX.Element => {
                 </FlexWrapper>
               </HoverCardTrigger>
               <HoverCardContent backgroundColor={'white'} gap={3}>
-                {links.map(({ icon: Icon, label, link }, index) => {
+                {links.map(({ icon: AIcon, label, link }, index) => {
                   const isActive = pathname === link.toLowerCase();
 
                   return (
@@ -90,8 +90,15 @@ export const AccountSwitcher = (): JSX.Element => {
                           isActive ? colors.skyBlue : 'transparent'
                         }
                         alignItems={'center'}
+                        role="group"
+                        className="group"
                       >
-                        <Icon color={colors.textGrey} size={20} />
+                        <Icon
+                          as={AIcon}
+                          color={colors.textGrey}
+                          boxSize={5}
+                          className="group-hover:text-[#0760c9] transition duration-150"
+                        />
                         <NormalText
                           cursor={'pointer'}
                           p={2}
