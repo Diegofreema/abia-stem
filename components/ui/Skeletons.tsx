@@ -3,7 +3,7 @@ import {
   SkeletonCircle,
   SkeletonText,
 } from '@/components/ui/skeleton';
-import { HStack } from '@chakra-ui/react';
+import { HStack, SimpleGrid } from '@chakra-ui/react';
 
 export const CategorySwitcherSkeleton = () => {
   return (
@@ -26,5 +26,16 @@ export const HeaderLeftSkeleton = () => {
       <Skeleton height={40} width={'200px'} />
       <SkeletonCircle size={'10'} />
     </HStack>
+  );
+};
+export const DataCardSkeleton = () => {
+  return (
+    <SimpleGrid
+      alignItems={'center'}
+      columns={{ base: 1, md: 2, lg: 3 }}
+      gap={5}
+    >
+      <Skeleton height={'200px'} width={'100%'} />
+    </SimpleGrid>
   );
 };
