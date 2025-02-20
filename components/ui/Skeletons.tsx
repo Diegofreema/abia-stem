@@ -22,7 +22,7 @@ export const AccountSwitcherSkeleton = () => {
 };
 export const HeaderLeftSkeleton = () => {
   return (
-    <HStack width="200px" gap={3}>
+    <HStack width="200px" gap={3} mr={5}>
       <Skeleton height={'40px'} width={'200px'} />
       <SkeletonCircle size={'10'} />
     </HStack>
