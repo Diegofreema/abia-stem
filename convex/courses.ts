@@ -3,9 +3,12 @@ import { query } from './_generated/server';
 
 export const getCourses = query({
   args: {
-    clerkId: v.string(),
+    clerkId: v.optional(v.string()),
   },
   handler: async (ctx, { clerkId }) => {
+    if (!clerkId) {
+      return [];
+    }
     const instructor = await ctx.db
       .query('users')
       .withIndex('by_google_id', (q) => q.eq('clerkId', clerkId))

@@ -21,9 +21,9 @@ export const ProfilePreview = () => {
   const onNavigate = () => {
     router.push('/instructor/courses/create-course');
   };
-  if (!user || pathname === '/instructor/courses/create-course') return null;
+  if (pathname === '/instructor/courses/create-course') return null;
   const ratingText =
-    user.rating === 0 ? 'No rating yet' : `${user.rating.toFixed(1)}/5`;
+    user?.rating === 0 ? 'No rating yet' : `${user?.rating.toFixed(1) || 0}/5`;
   return (
     <FlexWrapper
       width={'100%'}
@@ -34,7 +34,7 @@ export const ProfilePreview = () => {
         <Avatar src={user?.image} width={150} height={150} mt={-10} />
         <Stack>
           <Title color={colors.black} fontSize={{ base: 'xl', md: '3xl' }}>
-            {user.name}
+            {user?.name}
           </Title>
           <FlexWrapper gap={4} alignItems={'center'}>
             <FlexWrapper alignItems={'center'} gap={1}>
@@ -52,7 +52,7 @@ export const ProfilePreview = () => {
             </FlexWrapper>
             <FlexWrapper alignItems={'center'} gap={1}>
               <IconBook size={20} fill={colors.purple} color={colors.purple} />
-              <NumberFormatter number={user.numberOfCourses} text="courses" />
+              <NumberFormatter number={user?.numberOfCourses} text="courses" />
             </FlexWrapper>
           </FlexWrapper>
         </Stack>

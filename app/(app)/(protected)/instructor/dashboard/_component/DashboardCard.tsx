@@ -12,26 +12,24 @@ export const DashboardCard = () => {
   const { userId } = useAuth();
   const user = useQuery(api.users.currentUser, { userId: userId! });
 
-  if (!user) return null;
-
   const data = [
     {
       icon: IconDeviceDesktop,
-      title: user?.numberOfCourses,
+      title: user?.numberOfCourses || 0,
       description: 'Total Courses',
       backgroundColor: '#EAE3F6',
       color: '#6F42C1',
     },
     {
       icon: IconUser,
-      title: user?.numberOfStudents,
+      title: user?.numberOfStudents || 0,
       description: 'Students',
       backgroundColor: '#DDE2E5',
       color: '#1D3B53',
     },
     {
       icon: IconStar,
-      title: user?.rating,
+      title: user?.rating || 0,
       description: 'Ratings',
       backgroundColor: '#FEF6E3',
       color: '#F7C32D',

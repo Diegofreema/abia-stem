@@ -21,9 +21,7 @@ const head = ['Course name', 'Selling', 'Amount', 'Period', 'Action'];
 export const MostSellingCourseTable = (): JSX.Element | null => {
   const { userId } = useAuth();
   const courses = useQuery(api.courses.getCourses, { clerkId: userId! });
-  if (courses === undefined) {
-    return null;
-  }
+
   const data = courses?.map((item) => ({
     image: item.image,
     title: item.title,
@@ -32,7 +30,7 @@ export const MostSellingCourseTable = (): JSX.Element | null => {
     period: item._creationTime,
     courseId: item._id,
   }));
-  if (data.length === 0) return null;
+  if (courses === undefined || data?.length === 0) return null;
   return (
     <Stack border={'1px solid #ccc'} p={5} mt={16} borderRadius={5}>
       <FlexWrapper justifyContent={'space-between'} alignItems={'center'}>

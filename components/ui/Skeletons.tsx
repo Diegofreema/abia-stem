@@ -3,7 +3,8 @@ import {
   SkeletonCircle,
   SkeletonText,
 } from '@/components/ui/skeleton';
-import { HStack, SimpleGrid } from '@chakra-ui/react';
+import { HStack, SimpleGrid, Stack } from '@chakra-ui/react';
+import { FlexWrapper } from '../custom-components/FlexWrapper';
 
 export const CategorySwitcherSkeleton = () => {
   return (
@@ -37,5 +38,59 @@ export const DataCardSkeleton = () => {
     >
       <Skeleton height={'200px'} width={'100%'} />
     </SimpleGrid>
+  );
+};
+export const SidebarSkeleton = () => {
+  return (
+    <Skeleton minHeight={600} width={'30%'} gap={5} flexBasis={'30%'}>
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+      <SkeletonText noOfLines={1} />
+    </Skeleton>
+  );
+};
+
+export const BannerSkeleton = () => {
+  return <Skeleton height={200} width={'100%'} />;
+};
+
+export const ProfilePreviewSkeleton = () => {
+  return (
+    <FlexWrapper
+      width={'100%'}
+      alignItems={'center'}
+      justifyContent={'space-between'}
+    >
+      <FlexWrapper gap={5} alignItems={'center'}>
+        <SkeletonCircle size={150} width={150} height={150} mt={-10} />
+        <Stack>
+          <SkeletonText noOfLines={1} />
+
+          <FlexWrapper gap={4} alignItems={'center'}>
+            <FlexWrapper>
+              <SkeletonCircle size={20} width={20} height={20} />
+              <SkeletonText noOfLines={1} />
+            </FlexWrapper>
+            <FlexWrapper>
+              <SkeletonCircle size={20} width={20} height={20} />
+              <SkeletonText noOfLines={1} />
+            </FlexWrapper>
+            <FlexWrapper>
+              <SkeletonCircle size={20} width={20} height={20} />
+              <SkeletonText noOfLines={1} />
+            </FlexWrapper>
+          </FlexWrapper>
+        </Stack>
+      </FlexWrapper>
+      <Skeleton height={50} width={150} />
+    </FlexWrapper>
   );
 };

@@ -4,7 +4,7 @@ import { NormalText } from '../typography/Title';
 import { colors } from '@/constants';
 
 interface NumberFormatterProps {
-  number: number;
+  number: number | undefined;
   text?: string;
   big?: boolean;
 }
@@ -28,6 +28,7 @@ const NumberFormatter: React.FC<NumberFormatterProps> = ({
 }) => {
   const fontSize = big ? 30 : 18;
   const fontWeight = big ? 'bold' : 'normal';
+
   return (
     <FlexWrapper alignItems={'center'} gap={1}>
       <NormalText
@@ -35,7 +36,7 @@ const NumberFormatter: React.FC<NumberFormatterProps> = ({
         fontSize={fontSize}
         fontWeight={fontWeight}
       >
-        {formatNumber(number)}
+        {formatNumber(number || 0)}
       </NormalText>
       {text && (
         <NormalText color={colors.black} fontSize={18}>
