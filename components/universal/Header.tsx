@@ -5,6 +5,11 @@ import { FlexWrapper } from '../custom-components/FlexWrapper';
 import { HeaderLeft } from '../custom-components/HeaderLeft';
 import { AccountSwitcher } from '../custom-components/AccountSwitcher';
 import { Suspense } from 'react';
+import {
+  AccountSwitcherSkeleton,
+  CategorySwitcherSkeleton,
+  HeaderLeftSkeleton,
+} from '../ui/Skeletons';
 
 export const Header = async () => {
   // const user = session?.user;
@@ -15,15 +20,16 @@ export const Header = async () => {
         <Link href={'/'}>
           <Image src={'/logo.svg'} width={150} height={50} alt="logo" />
         </Link>
-        <Suspense>
+        <Suspense fallback={<CategorySwitcherSkeleton />}>
           <CategorySwitcher />
         </Suspense>
-        <Suspense>
+        <Suspense fallback={<AccountSwitcherSkeleton />}>
           <AccountSwitcher />
         </Suspense>
       </FlexWrapper>
-
-      <HeaderLeft />
+      <Suspense fallback={<HeaderLeftSkeleton />}>
+        <HeaderLeft />
+      </Suspense>
     </FlexWrapper>
   );
 };
