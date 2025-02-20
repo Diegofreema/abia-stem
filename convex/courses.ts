@@ -24,3 +24,10 @@ export const getCourses = query({
       .take(10);
   },
 });
+
+export const getCategory = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query('categories').collect();
+  },
+});

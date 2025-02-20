@@ -16,7 +16,7 @@ const InstructorLayout = ({ children }: Props) => {
         <Suspense fallback={<SidebarSkeleton />}>
           <SideNav routes={instructorRoutes} />
         </Suspense>
-        <Box width={'100%'} flexBasis={'70%'}>
+        <Box width={'100%'} flexBasis={'70%'} flex={1}>
           {children}
         </Box>
       </FlexWrapper>

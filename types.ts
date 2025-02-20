@@ -13,3 +13,7 @@ export type IRoutes = {
   label: string;
   icon: string;
 };
+
+export type TitleProps = {
+  title: string;
+};

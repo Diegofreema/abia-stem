@@ -360,3 +360,22 @@ export const accountLinks = [
     ],
   },
 ];
+
+export const levels = [
+  {
+    label: 'All Levels',
+    value: 'all levels',
+  },
+  {
+    label: 'Beginner',
+    value: 'beginner',
+  },
+  {
+    label: 'Intermediate',
+    value: 'intermediate',
+  },
+  {
+    label: 'Advanced',
+    value: 'advanced',
+  },
+];

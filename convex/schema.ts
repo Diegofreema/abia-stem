@@ -27,18 +27,24 @@ const User = defineTable({
 const Course = defineTable({
   instructorId: v.id('users'),
   title: v.string(),
-  description: v.optional(v.string()),
+  description: v.string(),
   image: v.optional(v.string()),
-  price: v.optional(v.number()),
-  categoryId: v.optional(v.id('categories')),
-  attachments: v.optional(v.array(v.id('attachments'))),
+  price: v.number(),
+  category: v.string(),
+  attachments: v.array(v.id('attachments')),
+  courseLevel: v.union(
+    v.literal('beginner'),
+    v.literal('intermediate'),
+    v.literal('advanced'),
+    v.literal('all levels')
+  ),
   isPublished: v.boolean(),
-  salesCount: v.optional(v.number()),
+  salesCount: v.number(),
+  isPaid: v.boolean(),
 });
 
 const Category = defineTable({
   name: v.string(),
-  courses: v.optional(v.array(v.id('courses'))),
 });
 const Attachment = defineTable({
   name: v.string(),
@@ -47,7 +53,6 @@ const Attachment = defineTable({
 });
 
 export default defineSchema({
-  ...authTables,
   users: User.index('by_google_id', ['clerkId']),
   courses: Course.index('by_instructor', ['instructorId']).index('by_count', [
     'salesCount',

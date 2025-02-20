@@ -1,4 +1,3 @@
-import { getAuthSessionId } from '@convex-dev/auth/server';
 import { v } from 'convex/values';
 import { internalMutation, query } from './_generated/server';
 
@@ -12,17 +11,6 @@ export const currentUser = query({
       .query('users')
       .withIndex('by_google_id', (q) => q.eq('clerkId', userId))
       .first();
-  },
-});
-
-export const currentSession = query({
-  args: {},
-  handler: async (ctx) => {
-    const sessionId = await getAuthSessionId(ctx);
-    if (sessionId === null) {
-      return null;
-    }
-    return await ctx.db.get(sessionId);
   },
 });
 
