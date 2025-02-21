@@ -1,18 +1,17 @@
 'use client';
+import Orb from '@/components/custom-components/Orbs';
+import { api } from '@/convex/_generated/api';
+import { levels } from '@/dummy_data';
+import { courseDetailsValidator } from '@/lib/validator';
 import { TitleProps } from '@/types';
 import { SimpleGrid, Stack } from '@chakra-ui/react';
-import { StepperTitle } from './StepperTitle';
-import { useForm } from 'react-hook-form';
-import { ValidatorField } from '../CustomInput';
-import { z } from 'zod';
-import { courseDetailsValidator } from '@/lib/validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import Orb from '@/components/custom-components/Orbs';
-import { FlexWrapper } from '@/components/custom-components/FlexWrapper';
-import { levels } from '@/dummy_data';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { ValidatorField } from '../CustomInput';
 import { ValidatorFieldSwitch } from '../CustomSwitch';
+import { StepperTitle } from './StepperTitle';
 export const CourseDetail = ({ title }: TitleProps): JSX.Element => {
   return (
     <Stack>
@@ -27,8 +26,8 @@ const CourseDetailForm = () => {
   const {
     control,
     formState: { errors, isSubmitting },
-    handleSubmit,
-    watch,
+    // handleSubmit,
+    // watch,
   } = useForm<z.infer<typeof courseDetailsValidator>>({
     defaultValues: {
       title: '',
@@ -42,9 +41,9 @@ const CourseDetailForm = () => {
     resolver: zodResolver(courseDetailsValidator),
   });
   if (data === undefined) return <Orb />;
-  const onSubmit = (data: z.infer<typeof courseDetailsValidator>) => {
-    console.log(data);
-  };
+  //   const onSubmit = (data: z.infer<typeof courseDetailsValidator>) => {
+  //     console.log(data);
+  //   };
   const cat = data?.map((item) => ({
     label: item.name,
     value: item.name.toLowerCase(),

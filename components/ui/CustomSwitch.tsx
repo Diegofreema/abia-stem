@@ -62,13 +62,3 @@ export const ValidatorFieldSwitch = <TFormValues extends Record<string, any>>({
     </Field.Root>
   );
 };
-
-export const CustomSwitch = ({
-  value,
-  onChange,
-}: {
-  value: boolean;
-  onChange: (checked: boolean) => void;
-}) => {
-  return;
-};
