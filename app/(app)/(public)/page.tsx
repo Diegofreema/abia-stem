@@ -5,8 +5,10 @@ import { HeroBottom } from "@/components/landing/HeroBottom";
 import { PopularCourses } from "@/components/landing/PopularCourses";
 import { TrendingCourses } from "@/components/landing/TrendingCourses";
 import { Box } from "@chakra-ui/react";
+import { withAuth, WithUserDataProps } from "@/components/withAuth";
 
-export default function Home() {
+function Home({ user }: WithUserDataProps) {
+  console.log({ user });
   return (
     <Box
       mx={"auto"}
@@ -22,3 +24,5 @@ export default function Home() {
     </Box>
   );
 }
+
+export default withAuth(Home);

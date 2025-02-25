@@ -28,7 +28,7 @@ export const Header = async () => {
           <Image
             src={"/logo.svg"}
             className={"flex-shrink-0"}
-            width={150}
+            width={100}
             height={50}
             alt="logo"
           />

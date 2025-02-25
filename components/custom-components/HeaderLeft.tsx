@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { AvatarMenu } from "./AvatarMenu";
 import { FlexWrapper } from "./FlexWrapper";
 import { Responsive } from "@/components/custom-components/Responsive";
+import { MobileMenu } from "@/components/custom-components/MobileMenu";
 
 export const HeaderLeft = () => {
   const [query, setQuery] = useQueryState("query", { defaultValue: "" });
@@ -53,19 +54,22 @@ export const HeaderLeft = () => {
           <IconSearch color="black" size={25} />
         </FlexWrapper>
       </Responsive>
-      <Unauthenticated>
-        <Button
-          backgroundColor={colors.skyBlue}
-          px={4}
-          color={colors.blue}
-          onClick={onSignIn}
-        >
-          Login
-        </Button>
-      </Unauthenticated>
-      <Authenticated>
-        <AvatarMenu />
-      </Authenticated>
+      <>
+        <MobileMenu />
+        <Unauthenticated>
+          <Button
+            backgroundColor={colors.skyBlue}
+            px={4}
+            color={colors.blue}
+            onClick={onSignIn}
+          >
+            Login
+          </Button>
+        </Unauthenticated>
+        <Authenticated>
+          <AvatarMenu />
+        </Authenticated>
+      </>
     </FlexWrapper>
   );
 };
