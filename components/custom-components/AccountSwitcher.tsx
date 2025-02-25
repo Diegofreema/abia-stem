@@ -1,30 +1,29 @@
-'use client';
-import { colors } from '@/constants';
-import { accountLinks } from '@/dummy_data';
-import { For, Icon } from '@chakra-ui/react';
-import { IconChevronDown } from '@tabler/icons-react';
-import { Link } from 'next-view-transitions';
-import { usePathname } from 'next/navigation';
-import { NormalText } from '../typography/Title';
+"use client";
+import { colors } from "@/constants";
+import { accountLinks } from "@/dummy_data";
+import { For, Icon } from "@chakra-ui/react";
+import { IconChevronDown } from "@tabler/icons-react";
+import { Link } from "next-view-transitions";
+import { usePathname } from "next/navigation";
+import { NormalText } from "../typography/Title";
 import {
-  HoverCardArrow,
   HoverCardContent,
   HoverCardRoot,
   HoverCardTrigger,
-} from '../ui/hover-card';
-import { FlexWrapper } from './FlexWrapper';
+} from "../ui/hover-card";
+import { FlexWrapper } from "./FlexWrapper";
 
-export const AccountSwitcher = (): JSX.Element => {
+export const AccountSwitcher = () => {
   const pathname = usePathname();
 
   return (
-    <HoverCardRoot size={'md'} openDelay={100} closeDelay={100}>
+    <HoverCardRoot size={"md"} openDelay={100} closeDelay={100}>
       <HoverCardTrigger>
-        <FlexWrapper gap={2} alignItems={'center'} className="group">
+        <FlexWrapper gap={2} alignItems={"center"} className="group">
           <NormalText
             color={colors.textGrey}
-            fontSize={'lg'}
-            fontWeight={'bold'}
+            fontSize={"lg"}
+            fontWeight={"bold"}
             className="group-hover:text-blue-300 transition duration-150"
           >
             Accounts
@@ -35,12 +34,12 @@ export const AccountSwitcher = (): JSX.Element => {
           />
         </FlexWrapper>
       </HoverCardTrigger>
-      <HoverCardContent maxWidth="240px" gap={3} backgroundColor={'white'}>
-        <HoverCardArrow />
+      <HoverCardContent maxWidth="240px" gap={3} backgroundColor={"white"}>
+        {/*<HoverCardArrow />*/}
         <For each={accountLinks}>
           {({ account, icon: BIcon, links }, index) => (
             <HoverCardRoot
-              positioning={{ placement: 'right-end' }}
+              positioning={{ placement: "right-end" }}
               openDelay={100}
               closeDelay={100}
               key={index}
@@ -50,29 +49,29 @@ export const AccountSwitcher = (): JSX.Element => {
                   _hover={{
                     color: colors.blue,
                     backgroundColor: colors.skyBlue,
-                    transition: 'all 0.3s ease-in-out',
+                    transition: "all 0.3s ease-in-out",
                   }}
                   backgroundColor={
                     pathname.includes(account.toLowerCase())
                       ? colors.skyBlue
-                      : 'transparent'
+                      : "transparent"
                   }
                   px={3}
-                  alignItems={'center'}
+                  alignItems={"center"}
                 >
                   <Icon as={BIcon} color={colors.textGrey} boxSize={5} />
                   <NormalText
                     key={index}
-                    cursor={'pointer'}
+                    cursor={"pointer"}
                     p={2}
-                    fontSize={'md'}
+                    fontSize={"md"}
                     color={colors.textGrey}
                   >
                     {account}
                   </NormalText>
                 </FlexWrapper>
               </HoverCardTrigger>
-              <HoverCardContent backgroundColor={'white'} gap={3}>
+              <HoverCardContent backgroundColor={"white"} gap={3}>
                 {links.map(({ icon: AIcon, label, link }, index) => {
                   const isActive = pathname === link.toLowerCase();
 
@@ -83,13 +82,13 @@ export const AccountSwitcher = (): JSX.Element => {
                         _hover={{
                           color: colors.blue,
                           backgroundColor: colors.skyBlue,
-                          transition: 'all 0.3s ease-in-out',
+                          transition: "all 0.3s ease-in-out",
                         }}
                         px={3}
                         backgroundColor={
-                          isActive ? colors.skyBlue : 'transparent'
+                          isActive ? colors.skyBlue : "transparent"
                         }
-                        alignItems={'center'}
+                        alignItems={"center"}
                         role="group"
                         className="group"
                       >
@@ -100,13 +99,13 @@ export const AccountSwitcher = (): JSX.Element => {
                           className="group-hover:text-[#0760c9] transition duration-150"
                         />
                         <NormalText
-                          cursor={'pointer'}
+                          cursor={"pointer"}
                           p={2}
-                          fontSize={'md'}
+                          fontSize={"md"}
                           _hover={{
                             color: colors.blue,
                             backgroundColor: colors.skyBlue,
-                            transition: 'all 0.3s ease-in-out',
+                            transition: "all 0.3s ease-in-out",
                           }}
                           color={colors.textGrey}
                         >
