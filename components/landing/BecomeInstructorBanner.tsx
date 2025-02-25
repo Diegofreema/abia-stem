@@ -11,6 +11,8 @@ export const BecomeInstructorBanner = () => {
       justifyContent={'space-between'}
       width={'100%'}
       borderRadius={9}
+      flexDirection={{base: 'column', md: 'row'}}
+      gap={{base: 5, md: 0}}
       backgroundColor={'#16A2B8'}
       p={10}
       mt={20}

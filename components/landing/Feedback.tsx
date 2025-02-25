@@ -10,7 +10,7 @@ export const Feedback = () => {
   return (
     <Box>
       <GridWrapper placeItems={'center'} placeContent={'center'}>
-        <Stack gap={5} mb={20}>
+        <Stack gap={5} mb={{base: 0, md: 20}}>
           <Title
             color={colors.black}
             fontWeight={700}
@@ -37,7 +37,7 @@ export const Feedback = () => {
             View Reviews
           </Button>
         </Stack>
-        <FlexWrapper justifyContent={'center'} alignItems={'center'}>
+        <FlexWrapper  justifyContent={{md: 'center'}} alignItems={{base: 'flex-start', md: 'center'}}>
           <StackCards />
         </FlexWrapper>
       </GridWrapper>

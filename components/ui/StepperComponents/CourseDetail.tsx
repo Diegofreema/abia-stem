@@ -23,7 +23,7 @@ import { useStep } from '@/hooks/useSteps';
 export const CourseDetail = ({
   title,
   loggedInUserId,
-}: TitleProps): JSX.Element => {
+}: TitleProps) => {
   return (
     <Stack>
       <StepperTitle title={title} />
@@ -40,6 +40,8 @@ const CourseDetailForm = ({
   const data = useQuery(api.courses.getCategory);
   const createCourse = useMutation(api.courses.createCourse);
   const getCourseId = useCourseId((state) => state.setCourseId);
+  const courseId = useCourseId((state) => state.courseId);
+  console.log(courseId);
   const [, setStep] = useStep();
 
   const {
@@ -81,6 +83,7 @@ const CourseDetailForm = ({
         title: 'Course media',
       });
     } catch (error) {
+      console.log(error)
       toaster.create({
         title: 'Error',
         description: 'An error occurred while creating course',

@@ -26,17 +26,14 @@ export const Hero = () => {
 const LeftHero = () => {
   return (
     <Stack gap={7}>
-      <FlexWrapper gap={2} alignItems={'center'} className="text-2xl">
-        {/* <Title as="h2" color={'black'} fontWeight={700} lineHeight={1.2}>
-         
-        </Title> */}
+      <FlexWrapper gap={2} alignItems={'center'} justifyContent={{base: 'center', md: 'flex-start'}} className={'sm:text-2xl'}>
         <RotatingText
           texts={[
             'at your fingertips',
             'from your comfort',
             'that is self paced',
           ]}
-          mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black text-lg overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+          mainClassName="px-2 sm:px-2  md:px-3 bg-cyan-300 text-black text-3xl font-bold overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
           staggerFrom={'last'}
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
@@ -52,14 +49,15 @@ const LeftHero = () => {
         Online learning and teaching marketplace with 5K+ courses & 10M
         students. Taught by experts to help you acquire new skills.
       </NormalText>
-      <FlexWrapper gap={5}>
+      <FlexWrapper gap={5} flexWrap={'wrap'}>
         <For each={text}>
           {(item, index) => (
-            <FlexWrapper key={index} gap={1}>
+            <FlexWrapper key={index} gap={1} className={'sm:basis-1/2 md:basis-1/3'}>
               <IconRosetteDiscountCheck fill={colors.black} />
               <NormalText
                 fontSize={{ base: 'sm', md: 'md' }}
                 color={colors.textGrey}
+                whiteSpace={'nowrap'}
               >
                 {item}
               </NormalText>

@@ -9,7 +9,7 @@ import { NormalText } from '../typography/Title';
 
 export const HeroActionBtns = (): JSX.Element => {
   return (
-    <FlexWrapper gap={6} alignItems={'center'}>
+    <FlexWrapper gap={6} alignItems={'center'} flexDirection={{base: 'column', md: 'row'}}>
       <Button
         backgroundColor={colors.lightRed}
         color={colors.red}

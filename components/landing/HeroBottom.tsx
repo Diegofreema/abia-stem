@@ -42,7 +42,7 @@ const details = [
 
 export const HeroBottom = (): JSX.Element => {
   return (
-    <FlexWrapper mt={20} gap={5}>
+    <FlexWrapper mt={20} gap={5} flexDirection={{base: 'column', md: 'row'}} >
       <For each={details}>
         {(item, index) => <DisplayCard key={index} {...item} />}
       </For>

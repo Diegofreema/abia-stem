@@ -1,6 +1,8 @@
-import { Avatar, AvatarGroup, For, Stack } from '@chakra-ui/react';
-import { NormalText } from '../typography/Title';
-import { colors } from '@/constants';
+import {Avatar, AvatarGroup, For} from '@chakra-ui/react';
+import {NormalText} from '../typography/Title';
+import {colors} from '@/constants';
+import {FlexWrapper} from "@/components/custom-components/FlexWrapper";
+
 const imgs = [
   'https://cdn.myanimelist.net/r/84x124/images/characters/9/131317.webp?s=d4b03c7291407bde303bc0758047f6bd',
   'https://cdn.myanimelist.net/r/84x124/images/characters/7/284129.webp?s=a8998bf668767de58b33740886ca571c',
@@ -9,7 +11,7 @@ const imgs = [
 ];
 export const HoverAvatarCard = (): JSX.Element => {
   return (
-    <Stack
+    <FlexWrapper
       bg="#08BC87"
       borderRadius={9}
       gap={3}
@@ -17,6 +19,8 @@ export const HoverAvatarCard = (): JSX.Element => {
       top={'30%'}
       right={5}
       p={4}
+      flexDirection={'column'}
+      hideBelow='md'
     >
       <NormalText color={colors.white} fontWeight={600}>
         Our daily new students
@@ -39,6 +43,6 @@ export const HoverAvatarCard = (): JSX.Element => {
           <Avatar.Fallback>1k+</Avatar.Fallback>
         </Avatar.Root>
       </AvatarGroup>
-    </Stack>
+    </FlexWrapper>
   );
 };

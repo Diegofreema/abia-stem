@@ -1,33 +1,36 @@
-import { colors } from '@/constants';
-import { useSelectCourses } from '@/hooks/useSelectCourses';
-import { Box, For } from '@chakra-ui/react';
-import { FlexWrapper } from '../custom-components/FlexWrapper';
-import { NormalText } from '../typography/Title';
-import { courses } from '@/dummy_data';
+import {colors} from '@/constants';
+import {useSelectCourses} from '@/hooks/useSelectCourses';
+import {For} from '@chakra-ui/react';
+import {FlexWrapper} from '../custom-components/FlexWrapper';
+import {NormalText} from '../typography/Title';
+import {courses} from '@/dummy_data';
 
 export const CoursesSwitcher = (): JSX.Element => {
   const [selectedCourse, setSelectedCourse] = useSelectCourses();
 
   return (
     <FlexWrapper
-      gap={10}
+      gap={{base: 5, md: 10}}
       width={'100%'}
-      justifyContent={'center'}
+      justifyContent={{base: 'flex-start',md: 'center'}}
       bg={colors.skyBlue}
       py={3}
       borderRadius={8}
+      flexWrap={'wrap'}
+      px={1}
     >
       <For each={courses}>
         {(course, index) => (
-          <Box
+          <FlexWrapper
             key={index}
-            p={2}
-            px={5}
+            py={2}
+            px={4}
             bg={selectedCourse === course ? colors.blue : 'transparent'}
             borderRadius={5}
+
           >
             <NormalText
-              fontSize={'lg'}
+              fontSize={{base: 'md', md: 'lg'}}
               fontWeight={500}
               onClick={() => setSelectedCourse(course)}
               cursor={'pointer'}
@@ -35,7 +38,7 @@ export const CoursesSwitcher = (): JSX.Element => {
             >
               {course}
             </NormalText>
-          </Box>
+          </FlexWrapper>
         )}
       </For>
     </FlexWrapper>

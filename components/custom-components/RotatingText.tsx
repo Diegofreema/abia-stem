@@ -194,10 +194,10 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
     }, [next, rotationInterval, auto]);
 
     return (
-      <div className="flex flex-col ">
-        <span className="text-black sm:text-3xl md:text-7xl whitespace-nowrap">
+      <div className="flex flex-col">
+        <p className="text-black text-3xl md:text-7xl font-bold whitespace-nowrap">
           Limitless learning
-        </span>
+        </p>
         <motion.span
           className={cn(
             'flex flex-wrap whitespace-pre-wrap relative',
