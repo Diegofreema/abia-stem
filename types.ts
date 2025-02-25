@@ -1,3 +1,5 @@
+import { Id } from './convex/_generated/dataModel';
+
 export type User = {
   id: string;
   email: string;
@@ -16,4 +18,5 @@ export type IRoutes = {
 
 export type TitleProps = {
   title: string;
+  loggedInUserId: Id<'users'>;
 };

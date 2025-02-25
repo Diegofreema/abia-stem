@@ -31,7 +31,7 @@ const Course = defineTable({
   image: v.optional(v.string()),
   price: v.number(),
   category: v.string(),
-  attachments: v.array(v.id('attachments')),
+  attachments: v.optional(v.array(v.id('attachments'))),
   courseLevel: v.union(
     v.literal('beginner'),
     v.literal('intermediate'),

@@ -1,6 +1,7 @@
 import { v } from 'convex/values';
-import { query } from './_generated/server';
+import { mutation, query } from './_generated/server';
 
+// queries
 export const getCourses = query({
   args: {
     clerkId: v.optional(v.string()),
@@ -29,5 +30,31 @@ export const getCategory = query({
   args: {},
   handler: async (ctx) => {
     return await ctx.db.query('categories').collect();
+  },
+});
+
+// mutations
+
+export const createCourse = mutation({
+  args: {
+    instructorId: v.id('users'),
+    title: v.string(),
+    description: v.string(),
+    price: v.number(),
+    category: v.string(),
+    courseLevel: v.union(
+      v.literal('beginner'),
+      v.literal('intermediate'),
+      v.literal('advanced'),
+      v.literal('all levels')
+    ),
+    isPaid: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert('courses', {
+      ...args,
+      isPublished: false,
+      salesCount: 0,
+    });
   },
 });

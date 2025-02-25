@@ -10,13 +10,8 @@ export const courseDetailsValidator = z.object({
     .min(3, { message: 'Must be 3 or more characters' })
     .max(255, { message: 'Must be 255 or less characters' }),
   price: z.string().min(1, { message: 'Price is required' }),
-  category: z
-    .string()
-    .min(3, { message: 'Must be 3 or more characters' })
-    .max(255, { message: 'Must be 255 or less characters' }),
-
+  category: z.string().min(3, { message: 'Select a category' }),
   courseLevel: z.enum(['beginner', 'intermediate', 'advanced', 'all levels']),
-  isPublished: z.boolean().default(false),
   isPaid: z.boolean().default(false),
 });
 

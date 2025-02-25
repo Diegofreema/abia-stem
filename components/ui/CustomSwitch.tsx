@@ -26,7 +26,6 @@ export const ValidatorFieldSwitch = <TFormValues extends Record<string, any>>({
 }: Props<TFormValues>): JSX.Element => {
   return (
     <Field.Root
-      invalid
       height={'100%'}
       display={'flex'}
       flexDir={'column'}
@@ -44,11 +43,8 @@ export const ValidatorFieldSwitch = <TFormValues extends Record<string, any>>({
               inputProps={{ onBlur: field.onBlur }}
               color={colors.textGrey}
               colorPalette={'green'}
-              focusRing={'transparent'}
-              label={label}
               variant={'solid'}
-              border={0}
-              borderColor={'transparent'}
+              borderWidth={0}
               outline={'none'}
               bg="transparent"
             />

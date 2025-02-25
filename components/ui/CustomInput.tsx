@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/select';
 
 import { colors } from '@/constants';
-import { Field, Input, InputProps } from '@chakra-ui/react';
+import { Field, Input, InputProps, Textarea } from '@chakra-ui/react';
 import { SelectProps } from '@radix-ui/react-select';
 import {
   Control,
@@ -16,6 +16,7 @@ import {
   FieldValues,
   Path,
 } from 'react-hook-form';
+import { NormalText } from '../typography/Title';
 type Props<TFormValues extends FieldValues> = InputProps & {
   name: Path<TFormValues>;
   errors: FieldErrors<TFormValues>;
@@ -40,7 +41,7 @@ export const ValidatorField = <TFormValues extends Record<string, any>>({
   ...props
 }: Props<TFormValues>): JSX.Element => {
   return (
-    <Field.Root invalid>
+    <Field.Root>
       <Field.Label color={colors.textGrey}>{label}</Field.Label>
       <Controller
         name={name}
@@ -55,7 +56,9 @@ export const ValidatorField = <TFormValues extends Record<string, any>>({
         )}
       />
       {errors[name] && (
-        <Field.ErrorText>{errors[name]?.message as string}</Field.ErrorText>
+        <NormalText color={colors.red}>
+          {errors[name]?.message as string}
+        </NormalText>
       )}
     </Field.Root>
   );
@@ -90,6 +93,20 @@ export const CustomInput = ({
           borderColor={colors.textGrey}
           borderStyle={'solid'}
           focusRingColor={colors.skyBlue}
+          p={2}
+        />
+      )}
+      {props.mode === 'textarea' && (
+        // @ts-ignore
+        <Textarea
+          {...props}
+          color={colors.black}
+          borderWidth={1}
+          borderColor={colors.textGrey}
+          borderStyle={'solid'}
+          focusRingColor={colors.skyBlue}
+          resize={'none'}
+          rows={8}
           p={2}
         />
       )}

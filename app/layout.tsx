@@ -5,6 +5,7 @@ import { ViewTransitions } from 'next-view-transitions';
 import localFont from 'next/font/local';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import './globals.css';
+import { Toaster } from '@/components/ui/toaster';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -39,6 +40,7 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
               >
                 <main className="min-h-screen">{children}</main>
+                <Toaster />
               </body>
             </NuqsAdapter>
           </Provider>
