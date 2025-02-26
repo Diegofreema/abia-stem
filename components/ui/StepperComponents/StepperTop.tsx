@@ -1,8 +1,9 @@
 'use client';
-import { useStep } from '@/hooks/useSteps';
-import { Box, For, SimpleGrid, Stack } from '@chakra-ui/react';
-import { Step } from './Step';
+import { FlexWrapper } from '@/components/custom-components/FlexWrapper';
 import { colors } from '@/constants';
+import { useStep } from '@/hooks/useSteps';
+import { Box, For, Stack } from '@chakra-ui/react';
+import { Step } from './Step';
 
 const data = [
   {
@@ -31,12 +32,11 @@ export const StepperTop = (): JSX.Element => {
   const { step } = activeStep;
   return (
     <Stack width={'100%'} bg={colors.bgGrey}>
-      <SimpleGrid
-        columns={7}
-        justifyContent={'space-between'}
+      <FlexWrapper
+        gap={2}
         width={'100%'}
         p={10}
-        placeItems={'center'}
+        alignItems={'center'}
         borderBottom={'1px solid #ccc'}
       >
         <For each={data}>
@@ -48,7 +48,7 @@ export const StepperTop = (): JSX.Element => {
             )
           }
         </For>
-      </SimpleGrid>
+      </FlexWrapper>
     </Stack>
   );
 };

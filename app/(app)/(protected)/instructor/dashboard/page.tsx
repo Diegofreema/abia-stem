@@ -3,6 +3,7 @@ import { DashboardCard } from './_component/DashboardCard';
 import { Suspense } from 'react';
 import { DataCardSkeleton } from '@/components/ui/Skeletons';
 import { Spinner } from '@chakra-ui/react';
+import { withAuth } from '@/components/withAuth';
 
 const dashboard = async () => {
   return (
@@ -23,4 +24,4 @@ const dashboard = async () => {
   );
 };
 
-export default dashboard;
+export default withAuth(dashboard);

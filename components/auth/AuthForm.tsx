@@ -9,7 +9,7 @@ import { GoogleLogo } from '../ui/GoogleLogo';
 
 export const AuthForm = () => {
   return (
-    <FlexWrapper className="bg-white w-full h-full justify-center items-center  flex-col">
+    <FlexWrapper className="bg-white w-full sm:h-1/2 md:h-full pt-10 justify-center items-center  flex-col">
       <FlexWrapper
         flexDir={'column'}
         alignItems={'center'}
@@ -18,7 +18,12 @@ export const AuthForm = () => {
         gap={5}
       >
         <NormalText fontSize={50}>👋</NormalText>
-        <Title color={colors.black}>Login into Abia Stem</Title>
+        <Title
+          color={colors.black}
+          fontSize={{ base: 'xl', md: '3xl', lg: '5xl' }}
+        >
+          Login into Abia Stem
+        </Title>
         <NormalText fontSize={20}>
           Nice to see you! Please log in with your account.
         </NormalText>
@@ -38,6 +43,7 @@ export const AuthForm = () => {
               backgroundColor: colors.skyBlue,
               transition: 'all 0.3s linear',
             }}
+            width={{ base: '100%', md: 'fit-content' }}
           >
             <GoogleLogo />
             Login with Google

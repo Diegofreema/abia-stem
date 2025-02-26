@@ -32,6 +32,7 @@ export const Step = ({ isActive, title, value }: Props): JSX.Element => {
           fontWeight={'bold'}
           color={isActive ? colors.blue : 'black'}
           whiteSpace={'nowrap'}
+          hideBelow={'md'}
         >
           {title}
         </NormalText>

@@ -2,7 +2,7 @@ import { v } from 'convex/values';
 import { internalMutation, query } from './_generated/server';
 
 export const currentUser = query({
-  args: { userId: v.optional(v.string()) },
+  args: { userId: v.optional(v.union(v.string(), v.null())) },
   handler: async (ctx, { userId }) => {
     if (!userId) {
       return null;
