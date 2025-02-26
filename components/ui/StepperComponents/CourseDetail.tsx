@@ -1,29 +1,27 @@
 'use client';
-import Orb from '@/components/custom-components/Orbs';
-import { api } from '@/convex/_generated/api';
-import { levels } from '@/dummy_data';
-import { courseDetailsValidator } from '@/lib/validator';
-import { TitleProps } from '@/types';
-import { SimpleGrid, Stack } from '@chakra-ui/react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQuery } from 'convex/react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { ValidatorField } from '../CustomInput';
-import { ValidatorFieldSwitch } from '../CustomSwitch';
-import { StepperTitle } from './StepperTitle';
-import { RichTextEditor } from '../RichTextEditor';
 import { FlexWrapper } from '@/components/custom-components/FlexWrapper';
-import { Button } from '../button';
 import { colors } from '@/constants';
-import { toaster } from '../toaster';
+import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
+import { levels } from '@/dummy_data';
 import { useCourseId } from '@/hooks/useCourseId';
 import { useStep } from '@/hooks/useSteps';
-export const CourseDetail = ({
-  title,
-  loggedInUserId,
-}: TitleProps) => {
+import { courseDetailsValidator } from '@/lib/validator';
+import { TitleProps } from '@/types';
+import { IconButton, SimpleGrid, Stack } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { IconEdit } from '@tabler/icons-react';
+import { useMutation, useQuery } from 'convex/react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Button } from '../button';
+import { ValidatorField } from '../CustomInput';
+import { ValidatorFieldSwitch } from '../CustomSwitch';
+import { RichTextEditor } from '../RichTextEditor';
+import { toaster } from '../toaster';
+import { StepperTitle } from './StepperTitle';
+export const CourseDetail = ({ title, loggedInUserId }: TitleProps) => {
   return (
     <Stack>
       <StepperTitle title={title} />
@@ -39,54 +37,99 @@ const CourseDetailForm = ({
 }) => {
   const data = useQuery(api.courses.getCategory);
   const createCourse = useMutation(api.courses.createCourse);
+  const editCourse = useMutation(api.courses.editCourse);
   const getCourseId = useCourseId((state) => state.setCourseId);
   const courseId = useCourseId((state) => state.courseId);
-  console.log(courseId);
+  const course = useQuery(api.courses.getCourse, { courseId });
   const [, setStep] = useStep();
 
+  const [disable, setDisable] = useState(false);
   const {
     control,
     formState: { errors, isSubmitting },
     handleSubmit,
+    setValue,
+    watch,
   } = useForm<z.infer<typeof courseDetailsValidator>>({
     defaultValues: {
       title: '',
-      description: '',
-      category: data?.[0].name.toLowerCase() || '',
+      description: 'Information technology',
+      category: '',
       courseLevel: 'all levels',
       isPaid: false,
       price: '',
     },
     resolver: zodResolver(courseDetailsValidator),
   });
-  if (data === undefined) return <Orb />;
+
+  useEffect(() => {
+    if (course) {
+      setDisable(true);
+      const fieldsToPopulate: {
+        key: keyof z.infer<typeof courseDetailsValidator>;
+        value: string | boolean;
+      }[] = [
+        { key: 'title', value: course.title },
+        { key: 'description', value: course.description },
+        { key: 'category', value: course.category.toLowerCase() },
+        { key: 'courseLevel', value: course.courseLevel },
+        { key: 'isPaid', value: course.isPaid },
+        { key: 'price', value: course.price.toString() },
+      ];
+      fieldsToPopulate.map((item) => setValue(item.key, item.value));
+    }
+  }, [course, setValue]);
+
+  if (data === undefined || course === undefined) return null;
+  const createdCourse = !!course;
+  const buttonText = createdCourse ? 'Edit' : 'Create';
+
+  const { courseLevel, category } = watch();
 
   const onSubmit = async (data: z.infer<typeof courseDetailsValidator>) => {
+    const descriptionText = course
+      ? 'Course edited'
+      : 'Complete the next steps to finish creating your course';
+    const errorText = course ? 'editing' : 'creating';
     try {
-      const courseId = await createCourse({
-        category: data.category,
-        courseLevel: data.courseLevel,
-        description: data.description,
-        instructorId: loggedInUserId,
-        isPaid: data.isPaid,
-        price: Number(data.price),
-        title: data.title,
-      });
+      if (course && courseId) {
+        await editCourse({
+          category: data.category,
+          courseLevel: data.courseLevel,
+          description: data.description,
+          isPaid: data.isPaid,
+          price: Number(data.price),
+          title: data.title,
+          courseId,
+        });
+      } else if (!course) {
+        const id = await createCourse({
+          category: data.category,
+          courseLevel: data.courseLevel,
+          description: data.description,
+          instructorId: loggedInUserId,
+          isPaid: data.isPaid,
+          price: Number(data.price),
+          title: data.title,
+        });
+        getCourseId(id);
+      }
+
       toaster.create({
         title: 'Success',
-        description: 'Complete the next steps to finish creating your course',
+        description: descriptionText,
         type: 'success',
       });
-      getCourseId(courseId);
+
       await setStep({
         step: 1,
         title: 'Course media',
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toaster.create({
         title: 'Error',
-        description: 'An error occurred while creating course',
+        description: `An error occurred while ${errorText} course`,
         type: 'error',
       });
     }
@@ -97,12 +140,20 @@ const CourseDetailForm = ({
   }));
   return (
     <Stack gap={5}>
+      {course && (
+        <div className="flex justify-end">
+          <IconButton onClick={() => setDisable(false)}>
+            <IconEdit color={colors.textGrey} />
+          </IconButton>
+        </div>
+      )}
       <ValidatorField
         control={control}
         name="title"
         errors={errors}
         label="Course title"
         placeholder="Enter course title"
+        disabled={disable}
       />
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
         <ValidatorField
@@ -113,14 +164,17 @@ const CourseDetailForm = ({
           placeholder="Select category"
           mode="select"
           collections={cat}
+          disabled={disable}
+          defaultValue={category}
         />
         <ValidatorField
           control={control}
           name="price"
           errors={errors}
-          label="Course Price"
+          label="Course Price (Naira)"
           placeholder="Add a price in naira"
           type="number"
+          disabled={disable}
         />
       </SimpleGrid>
       <SimpleGrid
@@ -137,6 +191,8 @@ const CourseDetailForm = ({
           placeholder="Select category"
           mode="select"
           collections={levels}
+          disabled={disable}
+          defaultValue={courseLevel}
         />
 
         <ValidatorFieldSwitch
@@ -144,6 +200,7 @@ const CourseDetailForm = ({
           name="isPaid"
           errors={errors}
           label="Check if you want this to be a paid course"
+          disabled={disable}
         />
       </SimpleGrid>
       <RichTextEditor
@@ -152,11 +209,12 @@ const CourseDetailForm = ({
         errors={errors}
         label="Course description"
         placeholder="Describe your course..."
+        disabled={disable}
       />
       <FlexWrapper justify="flex-end">
         <Button
           loading={isSubmitting}
-          disabled={isSubmitting}
+          disabled={isSubmitting || disable}
           loadingText="Creating course.."
           p={4}
           color={colors.white}
@@ -164,7 +222,7 @@ const CourseDetailForm = ({
           _hover={{ bg: colors.skyBlue }}
           onClick={handleSubmit(onSubmit)}
         >
-          Create
+          {buttonText}
         </Button>
       </FlexWrapper>
     </Stack>

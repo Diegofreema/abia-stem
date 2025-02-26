@@ -24,6 +24,7 @@ export const ValidatorFieldSwitch = <TFormValues extends Record<string, any>>({
   errors,
   name,
   control,
+  disabled,
 }: Props<TFormValues>): JSX.Element => {
   return (
     <Field.Root
@@ -48,6 +49,7 @@ export const ValidatorFieldSwitch = <TFormValues extends Record<string, any>>({
               borderWidth={0}
               outline={'none'}
               bg="transparent"
+              disabled={disabled}
             />
             <Field.Label color={colors.textGrey}>{label}</Field.Label>
           </FlexWrapper>

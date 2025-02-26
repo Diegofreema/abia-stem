@@ -1,12 +1,11 @@
 'use client';
+import { useGetCurrentUser } from '@/hooks/useGetCurrentUser';
 import { useStep } from '@/hooks/useSteps';
+import { Stack } from '@chakra-ui/react';
+import { AdditionalInformation } from './AdditionalInformation';
 import { CourseDetail } from './CourseDetail';
 import { CourseMedia } from './CourseMedia';
 import { Curriculum } from './Curriculum';
-import { AdditionalInformation } from './AdditionalInformation';
-import { Stack } from '@chakra-ui/react';
-import { useGetCurrentUser } from '@/hooks/useGetCurrentUser';
-import Orb from '@/components/custom-components/Orbs';
 
 const forms = [CourseDetail, CourseMedia, Curriculum, AdditionalInformation];
 export const StepperBottom = () => {
@@ -15,7 +14,7 @@ export const StepperBottom = () => {
   const { step, title } = activeStep;
   const Component = forms[step];
   if (user === undefined || user?._id === undefined) {
-    return <Orb />;
+    return null;
   }
   return (
     <Stack p={5}>

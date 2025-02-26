@@ -18,6 +18,7 @@ type Props<TFormValues extends FieldValues> = {
   control: Control<TFormValues>;
   label?: string;
   placeholder?: string;
+  disabled: boolean;
 };
 
 export const RichTextEditor = <TFormValues extends Record<string, any>>({
@@ -26,6 +27,7 @@ export const RichTextEditor = <TFormValues extends Record<string, any>>({
   name,
   label,
   placeholder,
+  disabled,
 }: Props<TFormValues>) => {
   return (
     <Field.Root>
@@ -38,6 +40,7 @@ export const RichTextEditor = <TFormValues extends Record<string, any>>({
             value={field.value}
             onChange={field.onChange}
             placeholder={placeholder}
+            disabled={disabled}
           />
         )}
       />

@@ -4,28 +4,28 @@ import {
   MenuRoot,
   MenuTrigger,
   MenuTriggerItem,
-} from "@/components/ui/menu";
-import { IconMenu } from "@tabler/icons-react";
-import { colors } from "@/constants";
-import { accountLinks } from "@/dummy_data";
-import { Link } from "next-view-transitions";
-import { usePathname } from "next/navigation";
+} from '@/components/ui/menu';
+import { IconMenu } from '@tabler/icons-react';
+import { colors } from '@/constants';
+import { accountLinks } from '@/dummy_data';
+import { Link } from 'next-view-transitions';
+import { usePathname } from 'next/navigation';
 
 export const MobileMenu = () => {
   const pathname = usePathname();
   const activeColor = (path: string) => {
     const isActive = pathname === path.toLowerCase();
-    return isActive ? colors.skyBlue : "transparent";
+    return isActive ? colors.skyBlue : 'transparent';
   };
   return (
     <MenuRoot>
-      <MenuTrigger asChild>
+      <MenuTrigger asChild className="sm:block md:hidden">
         <IconMenu color={colors.black} />
       </MenuTrigger>
       <MenuContent bg={colors.white}>
         {accountLinks.map((link, index) => (
           <MenuRoot
-            positioning={{ placement: "right-start", gutter: 2 }}
+            positioning={{ placement: 'right-start', gutter: 2 }}
             key={index}
           >
             <MenuTriggerItem
@@ -34,7 +34,7 @@ export const MobileMenu = () => {
               backgroundColor={
                 pathname.includes(link.account.toLowerCase())
                   ? colors.skyBlue
-                  : "transparent"
+                  : 'transparent'
               }
             >
               {link.account}

@@ -31,6 +31,7 @@ type Props<TFormValues extends FieldValues> = InputProps & {
     value: string;
     label: string;
   }[];
+  defaultValue?: string;
 };
 
 export const ValidatorField = <TFormValues extends Record<string, any>>({
@@ -40,6 +41,7 @@ export const ValidatorField = <TFormValues extends Record<string, any>>({
   control,
   mode = 'input',
   collections,
+
   ...props
 }: Props<TFormValues>): JSX.Element => {
   return (
@@ -84,7 +86,8 @@ export const CustomInput = ({
           collections={collections!}
           value={props.value as string}
           onValueChange={props.onChange as any}
-          defaultValue={props.value as string}
+          defaultValue={props.defaultValue as string}
+          disabled={props.disabled}
         />
       )}{' '}
       {props.mode === 'input' && (
@@ -121,6 +124,7 @@ const CustomSelect = ({
   defaultValue,
   placeholder,
   collections,
+  disabled,
 }: SelectProps & {
   placeholder: string;
   collections: {
@@ -128,11 +132,18 @@ const CustomSelect = ({
     label: string;
   }[];
 }) => {
+  console.log(defaultValue);
+
   return (
-    <Select onValueChange={onValueChange} defaultValue={defaultValue}>
+    <Select
+      onValueChange={onValueChange}
+      disabled={disabled}
+      defaultValue={defaultValue}
+    >
       <SelectTrigger>
         <SelectValue
           placeholder={placeholder}
+          defaultValue={defaultValue}
           className="text-black focus:ring-0 p-2 "
         />
       </SelectTrigger>
