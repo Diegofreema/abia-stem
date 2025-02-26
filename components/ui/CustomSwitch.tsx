@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { colors } from '@/constants';
 import { Field } from '@chakra-ui/react';
 import { SwitchProps } from '@radix-ui/react-switch';

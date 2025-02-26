@@ -1,11 +1,12 @@
-import { ProfilePreview } from '@/components/custom-components/ProfilePreview';
-import { Banner } from '@/components/ui/banner';
+import { ProfilePreview } from "@/components/custom-components/ProfilePreview";
+import { Banner } from "@/components/ui/banner";
 import {
   BannerSkeleton,
   ProfilePreviewSkeleton,
-} from '@/components/ui/Skeletons';
-import { Box } from '@chakra-ui/react';
-import React, { Suspense } from 'react';
+} from "@/components/ui/Skeletons";
+import { Box } from "@chakra-ui/react";
+import React, { Suspense } from "react";
+import { DashboardSidebarMenu } from "@/components/custom-components/DashboardSidebarMenu";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -14,9 +15,10 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         <Banner />
       </Suspense>
 
-      <Box width={{ base: '90%', md: '75%', lg: '70%' }} mx="auto">
+      <Box width={{ base: "90%", md: "75%", lg: "70%" }} mx="auto">
         <Suspense fallback={<ProfilePreviewSkeleton />}>
           <ProfilePreview />
+          <DashboardSidebarMenu />
         </Suspense>
 
         {children}
