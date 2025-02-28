@@ -27,7 +27,7 @@ const Course = defineTable({
   videoPreview: v.optional(v.union(v.string(), v.id('_storage'))),
   price: v.number(),
   category: v.string(),
-
+  chapterId: v.optional(v.array(v.id('chapters'))),
   courseLevel: v.union(
     v.literal('beginner'),
     v.literal('intermediate'),
@@ -79,5 +79,5 @@ export default defineSchema({
   categories: Category,
   muxData: MuxData,
   userProgress: UserProgress,
-  chapters: Chapters,
+  chapters: Chapters.index('by_course_id', ['courseId']),
 });

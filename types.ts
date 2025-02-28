@@ -19,19 +19,13 @@ export type IRoutes = {
 export type TitleProps = {
   title: string;
   loggedInUserId: Id<'users'>;
-  course:
-    | (Doc<'courses'> & {
-        imageUrl: string;
-        videoUrl: string;
-        attachments: Doc<'attachments'>[];
-      })
-    | null;
+  course: CourseType;
 };
 
-export type CourseType =
-  | (Doc<'courses'> & {
-      imageUrl: string;
-      videoUrl: string;
-      attachments: Doc<'attachments'>[];
-    })
-  | null;
+export type CourseType = {
+  course: Doc<'courses'>;
+  imageUrl: string;
+  videoUrl: string;
+  attachments: Doc<'attachments'>[];
+  chapters: Doc<'chapters'>[];
+};

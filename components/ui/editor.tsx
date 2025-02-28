@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 
 type EditorProps = {
   value: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   placeholder?: string;
   disabled: boolean;
 };

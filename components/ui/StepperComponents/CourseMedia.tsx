@@ -18,6 +18,7 @@ import { Attachments } from '../Attachments';
 import { Button } from '../button';
 import { toaster } from '../toaster';
 import { DropzoneImage, DropzoneVideo } from './Dropzone';
+import { NextPreviousBtn } from './NextPreviousBtn';
 
 export const CourseMedia = ({
   title,
@@ -39,12 +40,16 @@ const CourseMediaDetails = ({
   course: CourseType;
   loggedInUserId: Id<'users'>;
 }) => {
+  console.log(course);
+
   const setImage = useMedia((state) => state.setImage);
   const setVideo = useMedia((state) => state.setVideo);
   const selectedImage = useMedia((state) => state.image);
   const selectedVideo = useMedia((state) => state.video);
   const clearVideo = useMedia((state) => state.clearVideo);
   const clearImage = useMedia((state) => state.clearImage);
+  const videoUrl = useMedia((state) => state.videoUrl);
+
   const generateUploadUrl = useMutation(api.courses.generateUploadUrl);
   const courseId = useCourseId((state) => state.courseId);
   const uploadMedia = useMutation(api.courses.editCourse);
@@ -120,7 +125,6 @@ const CourseMediaDetails = ({
   const disable = !selectedImage || !selectedVideo || uploading;
   const image = course?.imageUrl;
   const video = course?.videoUrl;
-  console.log(course?.attachments);
 
   return (
     <Stack gap={{ base: 5, md: 10 }} position={'relative'}>
@@ -174,6 +178,8 @@ const CourseMediaDetails = ({
           maxFileSize={1_000_000_000}
           uploading={uploading}
           media={video!}
+          clearVideo={clearVideo}
+          videoUrl={videoUrl}
         />
       </FlexWrapper>
       <Attachments
@@ -183,23 +189,12 @@ const CourseMediaDetails = ({
         loggedInUserId={loggedInUserId}
         attachments={course?.attachments || []}
       />
-      <FlexWrapper justify={'flex-end'}>
-        <Button
-          bg={colors.blue}
-          disabled={disable}
-          loading={uploading}
-          px={3}
-          color={colors.white}
-          width={100}
-          onClick={onUpload}
-          className="transition cursor-pointer"
-          _hover={{
-            bg: colors.skyBlue,
-          }}
-        >
-          Next
-        </Button>
-      </FlexWrapper>
+
+      <NextPreviousBtn
+        onClick={onUpload}
+        disable={disable}
+        loading={uploading}
+      />
     </Stack>
   );
 };

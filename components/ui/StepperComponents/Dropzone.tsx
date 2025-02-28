@@ -114,10 +114,12 @@ export const DropzoneVideo = ({
   uploading,
   media,
   disable,
-}: DropzoneProps) => {
-  const videoUrl = useMedia((state) => state.videoUrl);
-
-  const clearVideo = useMedia((state) => state.clearVideo);
+  clearVideo,
+  videoUrl,
+}: DropzoneProps & {
+  videoUrl: string;
+  clearVideo: () => void;
+}) => {
   const hasMedia = media || videoUrl;
   return (
     <FileUploadRoot

@@ -41,12 +41,16 @@ export const getCourse = query({
     );
 
     const attachments = await getAttachment(ctx, course?._id as Id<'courses'>);
-
+    const chapters = await ctx.db
+      .query('chapters')
+      .withIndex('by_course_id', (q) => q.eq('courseId', courseId))
+      .collect();
     return {
-      ...course,
+      course,
       imageUrl,
       videoUrl,
       attachments,
+      chapters,
     };
   },
 });
@@ -150,7 +154,50 @@ export const createAttachment = mutation({
     });
   },
 });
+// create chapters
 
+export const createChapter = mutation({
+  args: {
+    courseId: v.id('courses'),
+    loggedInUserId: v.id('users'),
+    videoStorageId: v.id('_storage'),
+    title: v.string(),
+    description: v.string(),
+    isPaid: v.boolean(),
+    isPublished: v.boolean(),
+  },
+  handler: async (
+    ctx,
+    { courseId, loggedInUserId, videoStorageId, ...rest }
+  ) => {
+    const courseOwner = await ctx.db
+      .query('courses')
+      .withIndex('by_instructor', (q) => q.eq('instructorId', loggedInUserId))
+      .filter((q) => q.eq(q.field('_id'), courseId))
+      .first();
+
+    if (!courseOwner) {
+      throw new ConvexError({
+        message: 'Unauthorized',
+        code: 401,
+      });
+    }
+    const videoUrl = (await ctx.storage.getUrl(videoStorageId)) || '';
+
+    const newChapterId = await ctx.db.insert('chapters', {
+      courseId,
+      videoStorageId,
+      videoUrl,
+      ...rest,
+    });
+    const prevChaptersId = courseOwner.chapterId ?? [];
+    if (newChapterId) {
+      await ctx.db.patch(courseOwner._id, {
+        chapterId: [...prevChaptersId, newChapterId],
+      });
+    }
+  },
+});
 export const generateUploadUrl = mutation(async (ctx) => {
   return await ctx.storage.generateUploadUrl();
 });

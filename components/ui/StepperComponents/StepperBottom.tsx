@@ -29,7 +29,7 @@ export const StepperBottom = ({
     user === undefined ||
     user?._id === undefined ||
     course === undefined ||
-    course?._id === undefined
+    course?.course?._id === undefined
   ) {
     return <LoadingSpinner />;
   }

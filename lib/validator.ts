@@ -33,4 +33,5 @@ export const chapterValidator = z.object({
     .max(255, { message: 'Must be 255 or less characters' }),
   video: z.string().url({ message: 'A video is required' }),
   isPaid: z.boolean().default(false),
+  isPublished: z.boolean().default(false),
 });
