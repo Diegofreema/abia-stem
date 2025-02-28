@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { formatDuration, intervalToDuration } from 'date-fns';
+import { ReactMutation } from 'convex/react';
+import { EmptyObject } from 'react-hook-form';
+import { Id } from '@/convex/_generated/dataModel';
 
 const formatTimeDuration = (seconds: number): string => {
   // Convert seconds to milliseconds
@@ -32,3 +35,17 @@ export default formatTimeDuration;
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export const generateStorageId = async (
+  generateUploadUrl: any,
+  selectedFile: File
+): Promise<Id<'_storage'>> => {
+  const fileUrl = await generateUploadUrl();
+  const result = await fetch(fileUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': selectedFile!.type },
+    body: selectedFile,
+  });
+  const { storageId } = await result.json();
+  return storageId;
+};

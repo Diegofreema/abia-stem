@@ -1,5 +1,6 @@
-import { v } from 'convex/values';
-import { mutation, query } from './_generated/server';
+import { ConvexError, v } from 'convex/values';
+import { mutation, MutationCtx, query, QueryCtx } from './_generated/server';
+import { Id } from './_generated/dataModel';
 // queries
 export const getCourses = query({
   args: {
@@ -32,7 +33,21 @@ export const getCourse = query({
     if (!courseId) {
       return null;
     }
-    return await ctx.db.get(courseId);
+    const course = await ctx.db.get(courseId);
+
+    const imageUrl = await ctx.storage.getUrl(course?.image as Id<'_storage'>);
+    const videoUrl = await ctx.storage.getUrl(
+      course?.videoPreview as Id<'_storage'>
+    );
+
+    const attachments = await getAttachment(ctx, course?._id as Id<'courses'>);
+
+    return {
+      ...course,
+      imageUrl,
+      videoUrl,
+      attachments,
+    };
   },
 });
 
@@ -73,7 +88,8 @@ export const editCourse = mutation({
     courseId: v.id('courses'),
     title: v.optional(v.string()),
     description: v.optional(v.string()),
-    image: v.optional(v.string()),
+    image: v.optional(v.union(v.string(), v.id('_storage'))),
+    videoPreview: v.optional(v.union(v.string(), v.id('_storage'))),
     price: v.optional(v.number()),
     category: v.optional(v.string()),
     attachments: v.optional(v.array(v.id('attachments'))),
@@ -95,3 +111,55 @@ export const editCourse = mutation({
     });
   },
 });
+
+export const createAttachment = mutation({
+  args: {
+    courseId: v.id('courses'),
+    userId: v.id('users'),
+    storageId: v.id('_storage'),
+  },
+  handler: async (ctx, { courseId, storageId, userId }) => {
+    const courseOwner = await ctx.db
+      .query('courses')
+      .filter((q) =>
+        q.and(
+          q.eq(q.field('_id'), courseId),
+          q.eq(q.field('instructorId'), userId)
+        )
+      )
+      .first();
+
+    if (!courseOwner) {
+      throw new ConvexError({
+        message: 'Unauthorized',
+        code: 401,
+      });
+    }
+    const url = await ctx.storage.getUrl(storageId);
+    if (!url) {
+      throw new ConvexError({
+        message: 'Unauthorized',
+        code: 401,
+      });
+    }
+    await ctx.db.insert('attachments', {
+      courseId,
+      storageId,
+      url,
+      name: url.split('/').pop() as string,
+    });
+  },
+});
+
+export const generateUploadUrl = mutation(async (ctx) => {
+  return await ctx.storage.generateUploadUrl();
+});
+
+// helpers
+
+const getAttachment = async (ctx: QueryCtx, courseId: Id<'courses'>) => {
+  return await ctx.db
+    .query('attachments')
+    .withIndex('by_course_id', (q) => q.eq('courseId', courseId))
+    .collect();
+};

@@ -1,8 +1,9 @@
 import { StepperForm } from '@/components/ui/StepperComponents/StepperForm';
+import { withAuth, WithUserDataProps } from '@/components/withAuth';
 import React from 'react';
 
-const page = () => {
-  return <StepperForm />;
+const page = ({ user }: WithUserDataProps) => {
+  return <StepperForm userId={user.id} />;
 };
 
-export default page;
+export default withAuth(page);

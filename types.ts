@@ -1,4 +1,4 @@
-import { Id } from './convex/_generated/dataModel';
+import { Doc, Id } from './convex/_generated/dataModel';
 
 export type User = {
   id: string;
@@ -19,4 +19,19 @@ export type IRoutes = {
 export type TitleProps = {
   title: string;
   loggedInUserId: Id<'users'>;
+  course:
+    | (Doc<'courses'> & {
+        imageUrl: string;
+        videoUrl: string;
+        attachments: Doc<'attachments'>[];
+      })
+    | null;
 };
+
+export type CourseType =
+  | (Doc<'courses'> & {
+      imageUrl: string;
+      videoUrl: string;
+      attachments: Doc<'attachments'>[];
+    })
+  | null;

@@ -20,13 +20,14 @@ export const createUser = internalMutation({
     name: v.string(),
     email: v.string(),
     image: v.string(),
-    numberOfCourses: v.number(),
-    numberOfStudents: v.number(),
-    rating: v.number(),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert('users', {
       ...args,
+      numberOfPublishedCourses: 0,
+      numberOfCourses: 0,
+      numberOfStudents: 0,
+      rating: 0,
     });
   },
 });

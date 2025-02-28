@@ -3,8 +3,14 @@ import { Box } from '@chakra-ui/react';
 import { StepperTop } from './StepperTop';
 import { Suspense } from 'react';
 import { StepperBottom } from './StepperBottom';
+import { preloadQuery } from 'convex/nextjs';
+import { api } from '@/convex/_generated/api';
+import { LoadingSpinner } from '@/components/universal/LoadingSpinner';
 
-export const Stepper = (): JSX.Element => {
+export const Stepper = async ({ userId }: { userId: string }) => {
+  const preloadUser = await preloadQuery(api.users.currentUser, {
+    userId,
+  });
   return (
     <Box
       width={'100%'}
@@ -13,9 +19,9 @@ export const Stepper = (): JSX.Element => {
       borderRadius={7}
       mt={10}
     >
-      <Suspense fallback={null}>
+      <Suspense fallback={<LoadingSpinner />}>
         <StepperTop />
-        <StepperBottom />
+        <StepperBottom preloadedUser={preloadUser} />
       </Suspense>
     </Box>
   );

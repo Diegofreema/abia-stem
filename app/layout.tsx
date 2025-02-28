@@ -5,6 +5,8 @@ import { ViewTransitions } from 'next-view-transitions';
 import localFont from 'next/font/local';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import './globals.css';
+// Base styles for media player and provider (~400B).
+import '@vidstack/react/player/styles/base.css';
 import { Toaster } from '@/components/ui/toaster';
 
 const geistSans = localFont({

@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { NormalText } from '../../typography/Title';
 import { Stepper } from './Stepper';
 
-export const StepperForm = (): JSX.Element => {
+export const StepperForm = ({ userId }: { userId: string }) => {
   return (
     <Box flexDirection={'column'} gap={5} minWidth={'100%'}>
       <NormalText
@@ -16,7 +16,7 @@ export const StepperForm = (): JSX.Element => {
         course will appear for sale and you will be informed by email that your
         course has been accepted.
       </NormalText>
-      <Stepper />
+      <Stepper userId={userId} />
     </Box>
   );
 };

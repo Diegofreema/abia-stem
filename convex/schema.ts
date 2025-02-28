@@ -14,23 +14,20 @@ const User = defineTable({
   phoneVerificationTime: v.optional(v.number()),
   isAnonymous: v.optional(v.boolean()),
   numberOfCourses: v.number(),
+  numberOfPublishedCourses: v.optional(v.number()),
   numberOfStudents: v.number(),
   rating: v.number(),
-  //   roles: v.union(
-  //     v.literal('student'),
-  //     v.literal('instructor'),
-  //     v.literal('admin')
-  //   ),
 });
 
 const Course = defineTable({
   instructorId: v.id('users'),
   title: v.string(),
   description: v.string(),
-  image: v.optional(v.string()),
+  image: v.optional(v.union(v.string(), v.id('_storage'))),
+  videoPreview: v.optional(v.union(v.string(), v.id('_storage'))),
   price: v.number(),
   category: v.string(),
-  attachments: v.optional(v.array(v.id('attachments'))),
+
   courseLevel: v.union(
     v.literal('beginner'),
     v.literal('intermediate'),
@@ -41,14 +38,35 @@ const Course = defineTable({
   salesCount: v.number(),
   isPaid: v.boolean(),
 });
-
+const Chapters = defineTable({
+  title: v.string(),
+  description: v.string(),
+  videoStorageId: v.string(),
+  videoUrl: v.string(),
+  isPublished: v.boolean(),
+  isPaid: v.boolean(),
+  courseId: v.id('courses'),
+});
 const Category = defineTable({
   name: v.string(),
 });
 const Attachment = defineTable({
   name: v.string(),
   url: v.string(),
+  storageId: v.id('_storage'),
   courseId: v.id('courses'),
+});
+
+const MuxData = defineTable({
+  assetId: v.string(),
+  chapterId: v.string(),
+  playbackId: v.optional(v.string()),
+});
+
+const UserProgress = defineTable({
+  userId: v.id('users'),
+  chapterId: v.id('chapters'),
+  isCompleted: v.boolean(),
 });
 
 export default defineSchema({
@@ -57,6 +75,9 @@ export default defineSchema({
     'salesCount',
     'instructorId',
   ]),
-  attachments: Attachment,
+  attachments: Attachment.index('by_course_id', ['courseId']),
   categories: Category,
+  muxData: MuxData,
+  userProgress: UserProgress,
+  chapters: Chapters,
 });

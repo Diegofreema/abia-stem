@@ -2,12 +2,12 @@
 import { FlexWrapper } from '@/components/custom-components/FlexWrapper';
 import { colors } from '@/constants';
 import { api } from '@/convex/_generated/api';
-import { Id } from '@/convex/_generated/dataModel';
+import { Doc, Id } from '@/convex/_generated/dataModel';
 import { levels } from '@/dummy_data';
 import { useCourseId } from '@/hooks/useCourseId';
 import { useStep } from '@/hooks/useSteps';
 import { courseDetailsValidator } from '@/lib/validator';
-import { TitleProps } from '@/types';
+import { CourseType, TitleProps } from '@/types';
 import { IconButton, SimpleGrid, Stack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IconEdit } from '@tabler/icons-react';
@@ -21,26 +21,30 @@ import { ValidatorFieldSwitch } from '../CustomSwitch';
 import { RichTextEditor } from '../RichTextEditor';
 import { toaster } from '../toaster';
 import { StepperTitle } from './StepperTitle';
-export const CourseDetail = ({ title, loggedInUserId }: TitleProps) => {
+import { LoadingSpinner } from '@/components/universal/LoadingSpinner';
+import { EditAction } from '../EditAction';
+export const CourseDetail = ({ title, loggedInUserId, course }: TitleProps) => {
   return (
     <Stack>
       <StepperTitle title={title} />
-      <CourseDetailForm loggedInUserId={loggedInUserId} />
+      <CourseDetailForm loggedInUserId={loggedInUserId} course={course} />
     </Stack>
   );
 };
 
 const CourseDetailForm = ({
   loggedInUserId,
+  course,
 }: {
   loggedInUserId: Id<'users'>;
+  course: CourseType;
 }) => {
   const data = useQuery(api.courses.getCategory);
   const createCourse = useMutation(api.courses.createCourse);
   const editCourse = useMutation(api.courses.editCourse);
   const getCourseId = useCourseId((state) => state.setCourseId);
   const courseId = useCourseId((state) => state.courseId);
-  const course = useQuery(api.courses.getCourse, { courseId });
+
   const [, setStep] = useStep();
 
   const [disable, setDisable] = useState(false);
@@ -69,18 +73,18 @@ const CourseDetailForm = ({
         key: keyof z.infer<typeof courseDetailsValidator>;
         value: string | boolean;
       }[] = [
-        { key: 'title', value: course.title },
-        { key: 'description', value: course.description },
-        { key: 'category', value: course.category.toLowerCase() },
-        { key: 'courseLevel', value: course.courseLevel },
-        { key: 'isPaid', value: course.isPaid },
-        { key: 'price', value: course.price.toString() },
+        { key: 'title', value: course.title! },
+        { key: 'description', value: course.description! },
+        { key: 'category', value: course?.category?.toLowerCase()! },
+        { key: 'courseLevel', value: course.courseLevel! },
+        { key: 'isPaid', value: course.isPaid! },
+        { key: 'price', value: course?.price?.toString()! },
       ];
       fieldsToPopulate.map((item) => setValue(item.key, item.value));
     }
   }, [course, setValue]);
 
-  if (data === undefined || course === undefined) return null;
+  if (data === undefined) return <LoadingSpinner />;
   const createdCourse = !!course;
   const buttonText = createdCourse ? 'Edit' : 'Create';
 
@@ -140,13 +144,7 @@ const CourseDetailForm = ({
   }));
   return (
     <Stack gap={5}>
-      {course && (
-        <div className="flex justify-end">
-          <IconButton onClick={() => setDisable(false)}>
-            <IconEdit color={colors.textGrey} />
-          </IconButton>
-        </div>
-      )}
+      {course && <EditAction onClick={() => setDisable(false)} />}
       <ValidatorField
         control={control}
         name="title"
