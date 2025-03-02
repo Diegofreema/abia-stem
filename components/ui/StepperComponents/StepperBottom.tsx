@@ -1,15 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client';
-import { useGetCurrentUser } from '@/hooks/useGetCurrentUser';
+import { LoadingSpinner } from '@/components/universal/LoadingSpinner';
+import { api } from '@/convex/_generated/api';
+import { useCourseId } from '@/hooks/useCourseId';
 import { useStep } from '@/hooks/useSteps';
 import { Stack } from '@chakra-ui/react';
+import { Preloaded, usePreloadedQuery, useQuery } from 'convex/react';
 import { AdditionalInformation } from './AdditionalInformation';
 import { CourseDetail } from './CourseDetail';
 import { CourseMedia } from './CourseMedia';
 import { Curriculum } from './Curriculum';
-import { Preloaded, usePreloadedQuery, useQuery } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import { useCourseId } from '@/hooks/useCourseId';
-import { LoadingSpinner } from '@/components/universal/LoadingSpinner';
 
 const forms = [CourseDetail, CourseMedia, Curriculum, AdditionalInformation];
 export const StepperBottom = ({

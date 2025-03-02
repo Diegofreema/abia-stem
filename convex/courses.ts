@@ -1,6 +1,7 @@
 import { ConvexError, v } from 'convex/values';
-import { mutation, MutationCtx, query, QueryCtx } from './_generated/server';
 import { Id } from './_generated/dataModel';
+import { mutation, query, QueryCtx } from './_generated/server';
+import { getFAQSFromCourseId } from './faqs';
 // queries
 export const getCourses = query({
   args: {
@@ -20,7 +21,12 @@ export const getCourses = query({
     return await ctx.db
       .query('courses')
       .withIndex('by_count')
-      .filter((q) => q.eq(q.field('instructorId'), instructor._id))
+      .filter((q) =>
+        q.and(
+          q.eq(q.field('instructorId'), instructor._id),
+          q.eq(q.field('isPublished'), true)
+        )
+      )
       .order('desc')
       .take(10);
   },
@@ -35,7 +41,6 @@ export const getCourse = query({
     }
     const course = await ctx.db.get(courseId);
 
-    const imageUrl = await ctx.storage.getUrl(course?.image as Id<'_storage'>);
     const videoUrl = await ctx.storage.getUrl(
       course?.videoPreview as Id<'_storage'>
     );
@@ -45,12 +50,13 @@ export const getCourse = query({
       .query('chapters')
       .withIndex('by_course_id', (q) => q.eq('courseId', courseId))
       .collect();
+    const faqs = await getFAQSFromCourseId(ctx, courseId);
     return {
       course,
-      imageUrl,
       videoUrl,
       attachments,
       chapters,
+      faqs,
     };
   },
 });
@@ -80,11 +86,19 @@ export const createCourse = mutation({
     isPaid: v.boolean(),
   },
   handler: async (ctx, args) => {
-    return await ctx.db.insert('courses', {
+    const courseId = await ctx.db.insert('courses', {
       ...args,
       isPublished: false,
       salesCount: 0,
     });
+    if (courseId) {
+      const instructor = await ctx.db.get(args.instructorId);
+      await ctx.db.patch(args.instructorId, {
+        numberOfCourses: (instructor?.numberOfCourses ?? 0) + 1,
+      });
+    }
+
+    return courseId;
   },
 });
 export const editCourse = mutation({
@@ -92,7 +106,7 @@ export const editCourse = mutation({
     courseId: v.id('courses'),
     title: v.optional(v.string()),
     description: v.optional(v.string()),
-    image: v.optional(v.union(v.string(), v.id('_storage'))),
+    image: v.optional(v.id('_storage')),
     videoPreview: v.optional(v.union(v.string(), v.id('_storage'))),
     price: v.optional(v.number()),
     category: v.optional(v.string()),
@@ -110,12 +124,44 @@ export const editCourse = mutation({
     isPaid: v.optional(v.boolean()),
   },
   handler: async (ctx, { courseId, ...rest }) => {
+    const imageUrl = (await getMediaUrl(ctx, rest.image)) ?? '';
     return await ctx.db.patch(courseId, {
+      imageUrl,
+      imageStorageId: rest.image,
       ...rest,
     });
   },
 });
+export const publishCourse = mutation({
+  args: {
+    courseId: v.id('courses'),
+    loggedInUser: v.id('users'),
+  },
+  handler: async (ctx, { courseId, loggedInUser }) => {
+    const course = await ctx.db
+      .query('courses')
+      .withIndex('by_id', (q) => q.eq('_id', courseId))
+      .filter((q) => q.eq(q.field('instructorId'), loggedInUser))
+      .first();
+    if (!course) {
+      throw new ConvexError({
+        message: 'Unauthorized',
+        code: 401,
+      });
+    }
 
+    await ctx.db.patch(course._id, {
+      isPublished: true,
+    });
+    if (courseId) {
+      const instructor = await ctx.db.get(loggedInUser);
+      await ctx.db.patch(loggedInUser, {
+        numberOfPublishedCourses:
+          (instructor?.numberOfPublishedCourses ?? 0) + 1,
+      });
+    }
+  },
+});
 export const createAttachment = mutation({
   args: {
     courseId: v.id('courses'),
@@ -209,4 +255,12 @@ const getAttachment = async (ctx: QueryCtx, courseId: Id<'courses'>) => {
     .query('attachments')
     .withIndex('by_course_id', (q) => q.eq('courseId', courseId))
     .collect();
+};
+
+const getMediaUrl = async (
+  ctx: QueryCtx,
+  storageId: Id<'_storage'> | undefined
+) => {
+  if (!storageId) return '';
+  return await ctx.storage.getUrl(storageId);
 };

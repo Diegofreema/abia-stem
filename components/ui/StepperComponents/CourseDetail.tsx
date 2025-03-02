@@ -1,16 +1,16 @@
 'use client';
 import { FlexWrapper } from '@/components/custom-components/FlexWrapper';
+import { LoadingSpinner } from '@/components/universal/LoadingSpinner';
 import { colors } from '@/constants';
 import { api } from '@/convex/_generated/api';
-import { Doc, Id } from '@/convex/_generated/dataModel';
+import { Id } from '@/convex/_generated/dataModel';
 import { levels } from '@/dummy_data';
 import { useCourseId } from '@/hooks/useCourseId';
 import { useStep } from '@/hooks/useSteps';
 import { courseDetailsValidator } from '@/lib/validator';
 import { CourseType, TitleProps } from '@/types';
-import { IconButton, SimpleGrid, Stack } from '@chakra-ui/react';
+import { SimpleGrid, Stack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IconEdit } from '@tabler/icons-react';
 import { useMutation, useQuery } from 'convex/react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -18,11 +18,10 @@ import { z } from 'zod';
 import { Button } from '../button';
 import { ValidatorField } from '../CustomInput';
 import { ValidatorFieldSwitch } from '../CustomSwitch';
+import { EditAction } from '../EditAction';
 import { RichTextEditor } from '../RichTextEditor';
 import { toaster } from '../toaster';
 import { StepperTitle } from './StepperTitle';
-import { LoadingSpinner } from '@/components/universal/LoadingSpinner';
-import { EditAction } from '../EditAction';
 export const CourseDetail = ({ title, loggedInUserId, course }: TitleProps) => {
   return (
     <Stack>
@@ -73,12 +72,12 @@ const CourseDetailForm = ({
         key: keyof z.infer<typeof courseDetailsValidator>;
         value: string | boolean;
       }[] = [
-        { key: 'title', value: course?.course.title! },
-        { key: 'description', value: course?.course.description! },
-        { key: 'category', value: course?.course?.category?.toLowerCase()! },
-        { key: 'courseLevel', value: course?.course.courseLevel! },
-        { key: 'isPaid', value: course?.course.isPaid! },
-        { key: 'price', value: course?.course?.price?.toString()! },
+        { key: 'title', value: course?.course.title },
+        { key: 'description', value: course?.course.description },
+        { key: 'category', value: course?.course?.category?.toLowerCase() },
+        { key: 'courseLevel', value: course?.course.courseLevel },
+        { key: 'isPaid', value: course?.course.isPaid },
+        { key: 'price', value: course?.course?.price?.toString() },
       ];
       fieldsToPopulate.map((item) => setValue(item.key, item.value));
     }

@@ -23,7 +23,7 @@ export const MostSellingCourseTable = (): JSX.Element | null => {
   const courses = useQuery(api.courses.getCourses, { clerkId: userId! });
 
   const data = courses?.map((item) => ({
-    image: item.image,
+    image: item.imageUrl,
     title: item.title,
     selling: item.salesCount,
     amount: (item.salesCount || 0) * (item.price || 0),

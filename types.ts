@@ -28,4 +28,5 @@ export type CourseType = {
   videoUrl: string;
   attachments: Doc<'attachments'>[];
   chapters: Doc<'chapters'>[];
+  faqs: Doc<'faqs'>[];
 };

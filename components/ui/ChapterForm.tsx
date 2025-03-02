@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useChapterModal } from '@/hooks/useChapterModal';
 
 import {
@@ -9,27 +10,26 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
+import { colors } from '@/constants';
+import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
+import { useCourseId } from '@/hooks/useCourseId';
+import { generateStorageId } from '@/lib/utils';
+import { chapterValidator } from '@/lib/validator';
 import { Button, FileUploadFileChangeDetails, Stack } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from 'convex/react';
+import { ConvexError } from 'convex/values';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { chapterValidator } from '@/lib/validator';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { colors } from '@/constants';
+import { NormalText } from '../typography/Title';
 import { ValidatorField } from './CustomInput';
-import { RichTextEditor } from './RichTextEditor';
 import { ValidatorFieldSwitch } from './CustomSwitch';
+import { RichTextEditor } from './RichTextEditor';
 import { DropzoneVideo } from './StepperComponents/Dropzone';
 import { toaster } from './toaster';
-import { useState } from 'react';
-import { NormalText } from '../typography/Title';
-import { useCourseId } from '@/hooks/useCourseId';
-import { Id } from '@/convex/_generated/dataModel';
-import { generateStorageId } from '@/lib/utils';
-import { useMutation } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import { ConvexError } from 'convex/values';
 type Props = {
   loggedInUser: Id<'users'>;
 };
@@ -60,7 +60,14 @@ export const ChapterForm = ({ loggedInUser }: Props) => {
   const { video } = watch();
 
   const onSubmit = async (values: z.infer<typeof chapterValidator>) => {
-    if (!initialVideo || !courseId) return;
+    if (!initialVideo) return;
+    if (!courseId) {
+      return toaster.create({
+        type: 'info',
+        title: 'Can not upload media',
+        description: 'Please complete the previous steps first',
+      });
+    }
     const videoStorageId = await generateStorageId(
       generateUploadUrl,
       initialVideo

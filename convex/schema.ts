@@ -23,7 +23,8 @@ const Course = defineTable({
   instructorId: v.id('users'),
   title: v.string(),
   description: v.string(),
-  image: v.optional(v.union(v.string(), v.id('_storage'))),
+  imageStorageId: v.optional(v.id('_storage')),
+  imageUrl: v.optional(v.string()),
   videoPreview: v.optional(v.union(v.string(), v.id('_storage'))),
   price: v.number(),
   category: v.string(),
@@ -69,6 +70,12 @@ const UserProgress = defineTable({
   isCompleted: v.boolean(),
 });
 
+const FAQ = defineTable({
+  question: v.string(),
+  answer: v.string(),
+  courseId: v.id('courses'),
+});
+
 export default defineSchema({
   users: User.index('by_google_id', ['clerkId']),
   courses: Course.index('by_instructor', ['instructorId']).index('by_count', [
@@ -80,4 +87,5 @@ export default defineSchema({
   muxData: MuxData,
   userProgress: UserProgress,
   chapters: Chapters.index('by_course_id', ['courseId']),
+  faqs: FAQ.index('by_course_id', ['courseId']),
 });

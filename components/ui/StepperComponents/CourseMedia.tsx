@@ -15,7 +15,6 @@ import { useMedia } from '@/lib/zustand/useMedia';
 import { useMutation } from 'convex/react';
 import { useState } from 'react';
 import { Attachments } from '../Attachments';
-import { Button } from '../button';
 import { toaster } from '../toaster';
 import { DropzoneImage, DropzoneVideo } from './Dropzone';
 import { NextPreviousBtn } from './NextPreviousBtn';
@@ -88,6 +87,13 @@ const CourseMediaDetails = ({
   };
 
   const onUpload = async () => {
+    if (course?.course?._id) {
+      return toaster.create({
+        type: 'info',
+        title: 'Can not upload media',
+        description: 'Please complete the previous steps first',
+      });
+    }
     setUploading(true);
     if (!selectedImage || !selectedVideo || !courseId) return;
     try {
@@ -113,6 +119,8 @@ const CourseMediaDetails = ({
       clearImage();
       clearVideo();
     } catch (error) {
+      console.log(error);
+
       toaster.create({
         type: 'error',
         title: 'Something went wrong',

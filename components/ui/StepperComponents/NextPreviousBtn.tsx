@@ -5,13 +5,13 @@ import { Button } from '../button';
 type Props = {
   onClick: () => void;
   disable?: boolean;
-
+  text?: string;
   loading?: boolean;
 };
 
 export const NextPreviousBtn = ({
   disable,
-
+  text = 'Next',
   onClick,
   loading,
 }: Props): JSX.Element => {
@@ -23,14 +23,14 @@ export const NextPreviousBtn = ({
         loading={loading}
         px={3}
         color={colors.white}
-        width={100}
+        width={'fit-content'}
         onClick={onClick}
         className="transition cursor-pointer"
         _hover={{
           bg: colors.skyBlue,
         }}
       >
-        Next
+        {text}
       </Button>
     </FlexWrapper>
   );

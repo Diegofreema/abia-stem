@@ -35,3 +35,13 @@ export const chapterValidator = z.object({
   isPaid: z.boolean().default(false),
   isPublished: z.boolean().default(false),
 });
+export const faqValidator = z.object({
+  question: z
+    .string()
+    .min(3, { message: 'Must be 3 or more characters' })
+    .max(255, { message: 'Must be 255 or less characters' }),
+  answer: z
+    .string()
+    .min(3, { message: 'Must be 3 or more characters' })
+    .max(500, { message: 'Must be 500 or less characters' }),
+});
